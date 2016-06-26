@@ -1,0 +1,130 @@
+{% extends "layouts.app" %}
+
+{% block breadcrumb %}
+
+    <li><a href="{{ route('residence.contract.index', [residence.id]) }}" title="{{ trans_choice('global.contract.title', 2) }}">{{ trans_choice('global.contract.title', 2) }}</a></li>
+    <li class="active">{{ trans('global.contract.prefix') ~ ' ' ~ contract.flat.full_name }}</li>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+
+
+        <div class="{% if contract.documents is not empty %}col-sm-6{% else %}col-sm-12{% endif %}">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    {{ trans_choice('global.contract.title', 1) }}
+                    <div class="btn-group pull-right">
+                        <a href="{{ route('residence.contract.edit', [residence.id, contract.id]) }}" title="{{ trans('global.lbl.edit') }}" class="btn btn-default btn-xs">{{ trans('global.lbl.edit') }}</a>
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#modal_destroy_contract" title="{{ trans('global.lbl.delete') }}" class="btn btn-danger btn-xs">{{ trans('global.lbl.delete') }}</a>
+                    </div>
+                </div>
+
+                <table class="table">
+
+                    <tr>
+                        <td>{{ trans('global.contract.start_date') }}</td>
+                        <td>{{ contract.start_date | date('d/m/Y') }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>{{ trans('global.contract.end_date') }}</td>
+                        <td>{{ contract.end_date | date('d/m/Y') }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>{{ trans('global.flat.price') }}</td>
+                        <td>{{ contract.price }} €</td>
+                    </tr>
+
+                    <tr>
+                        <td>{{ trans('global.contract.application_fee') }}</td>
+                        <td>{{ contract.application_fee }} €</td>
+                    </tr>
+
+                    <tr>
+                        <td>{{ trans('global.contract.deposit') }}</td>
+                        <td>{{ contract.full_deposit }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>{{ trans('global.contract.mode_of_payment') }}</td>
+                        <td>{{ contract.mode_of_payment }}</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+            {# modal suppression #}
+            <div class="modal fade" id="modal_destroy_contract" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">{{ trans('global.contract.delete') }}</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>{{ trans('global.contract.destroy') }} <strong>{{ contract.flat.full_name }}</strong> ?</p>
+                        </div>
+
+                        <div class="modal-footer">
+                            {{ form_open({'method' : 'delete', 'route' : ['residence.contract.destroy', residence.id, contract.id]}) }}
+                            <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('global.lbl.close') }}</button>
+                            {{ form_submit(trans('global.lbl.delete'), {'class' : 'btn btn-danger'}) }}
+                            {{ form_close() }}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {# fin modal suppression #}
+
+        </div>
+
+
+
+        {% if contract.documents is not empty %}
+
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><span class="text-danger">Documents à fournir</span></div>
+
+                    <table class="table">
+
+                        {% for document in contract.documents %}
+
+                            <tr>
+                                <td>{{ document.name }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                    </table>
+
+                </div>
+            </div>
+
+        {% endif %}
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-6">
+
+            {% include 'flat.info.twig' with {'flat' : contract.flat} %}
+
+        </div>
+        <div class="col-sm-6">
+
+            {% include 'tenant.info.twig' with {'tenant' : contract.tenant} %}
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

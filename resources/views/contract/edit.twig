@@ -1,0 +1,244 @@
+{% extends "layouts.app" %}
+
+{% block breadcrumb %}
+
+    <li><a href="{{ route('residence.contract.index', residence.id) }}">{{ trans_choice('global.contract.title', 2) }}</a></li>
+    <li class="active">{{ trans('global.contract.edit') }} {{ contract.flat.name }}</li>
+
+{% endblock %}
+
+{% block content %}
+
+    {{ form_model(contract, {'method' : 'put', 'route' : ['residence.contract.update', residence.id, contract.id]}) }}
+
+    {# Résidence #}
+    {{ form_hidden('residence_id', residence.id) }}
+
+    {# Logement #}
+    <div class="form-group {% if errors.messages.flat is not empty %}has-error{% endif %}">
+        {{ form_label('flat', trans_choice('global.flat.title', 1)) }}
+        {{ form_select('flat', flats, contract.flat.id, {'class': 'form-control'}) }}
+        {% if errors.messages.flat is not empty %}<span class="label label-danger">{{ errors.messages.flat | first }}</span>{% endif %}
+    </div>
+
+    {# Locataire #}
+    <div class="form-group {% if errors.messages.tenant is not empty %}has-error{% endif %}">
+        {{ form_label('tenant', trans_choice('global.tenant.title', 1)) }}
+        {{ form_select('tenant', tenants, contract.tenant.id, {'class': 'form-control'}) }}
+        {% if errors.messages.tenant is not empty %}<span class="label label-danger">{{ errors.messages.tenant | first }}</span>{% endif %}
+    </div>
+
+    {# Date de début #}
+    <div class="form-group {% if errors.messages.start_date is not empty %}has-error{% endif %}">
+        {{ form_label('start_date', trans('global.contract.start_date')) }}
+        {{ form_date('start_date', 'now' | date('Y-m-d'), {'class': 'form-control datetimepicker'}) }}
+        {% if errors.messages.start_date is not empty %}<span class="label label-danger">{{ errors.messages.start_date | first }}</span>{% endif %}
+    </div>
+
+    {# Date de fin #}
+    <div class="form-group {% if errors.messages.end_date is not empty %}has-error{% endif %}">
+        {{ form_label('end_date', trans('global.contract.end_date')) }}
+        {{ form_date('end_date', '', {'class': 'form-control datetimepicker'}) }}
+        {% if errors.messages.end_date is not empty %}<span class="label label-danger">{{ errors.messages.end_date | first }}</span>{% endif %}
+    </div>
+
+    {# Loyer #}
+    <div class="form-group {% if errors.messages.price is not empty %}has-error{% endif %}">
+        {{ form_label('price', trans('global.flat.price')) }}
+
+        <div class="input-group">
+            {{ form_number('price', null, {'class': 'form-control'}) }}
+            <div class="input-group-addon">{{ trans('global.lbl.euro') }}</div>
+        </div>
+
+        {% if errors.messages.price is not empty %}<span class="label label-danger">{{ errors.messages.price | first }}</span>{% endif %}
+    </div>
+
+    {# Frais de dossier #}
+    <div class="form-group {% if errors.messages.application_fee is not empty %}has-error{% endif %}">
+        {{ form_label('application_fee', trans('global.contract.application_fee')) }}
+
+        <div class="input-group">
+            {{ form_number('application_fee', null, {'class': 'form-control'}) }}
+            <div class="input-group-addon">{{ trans('global.lbl.euro') }}</div>
+        </div>
+
+        {% if errors.messages.application_fee is not empty %}<span class="label label-danger">{{ errors.messages.application_fee | first }}</span>{% endif %}
+    </div>
+
+    {# Dépôt de garantie #}
+    <div class="form-group {% if errors.messages.deposit is not empty %}has-error{% endif %}">
+        {{ form_label('deposit', trans('global.contract.deposit')) }}
+
+        <div class="input-group">
+            {{ form_number('deposit', null, {'class': 'form-control'}) }}
+            <div class="input-group-addon">{{ trans('global.lbl.euro') }}</div>
+        </div>
+
+        {% if errors.messages.deposit is not empty %}<span class="label label-danger">{{ errors.messages.deposit | first }}</span>{% endif %}
+    </div>
+
+    {# Mode de paiement #}
+    <div class="form-group {% if errors.messages.mode_of_payment is not empty %}has-error{% endif %}">
+        {{ form_label('mode_of_payment', trans('global.contract.mode_of_payment')) }}
+        {% set values = {'check' : trans('global.contract.check'), 'credit_cart' : trans('global.contract.credit_card'), 'cash' : trans('global.contract.cash'), 'transfer' : trans('global.contract.transfer'), 'other' : trans('global.contract.other')} %}
+        {{ form_select('mode_of_payment', values, contract.mode_of_payment, {'class': 'form-control'}) }}
+        {% if errors.messages.mode_of_payment is not empty %}<span class="label label-danger">{{ errors.messages.mode_of_payment | first }}</span>{% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ trans('global.contract.general') }}</div>
+                <div class="panel-body">
+                    <table>
+
+                        {% for document in documents_general %}
+
+                            {% if document.id in contract.documentsId %}{% set value = true %}{% else %}{% set value = false %}{% endif %}
+
+                            <tr>
+                                <td>
+                                    {{ form_checkbox('documents[]', document.id, value) }}
+                                    {{ form_label(document.id, document.name) }}
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ trans_choice('global.tenant.student', 1) }}</div>
+                <div class="panel-body">
+                    <table>
+
+                        {% for document in documents_student %}
+
+                            {% if document.id in contract.documentsId %}{% set value = true %}{% else %}{% set value = false %}{% endif %}
+
+                            <tr>
+                                <td>
+                                    {{ form_checkbox('documents[]', document.id, value) }}
+                                    {{ form_label(document.id, document.name) }}
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ trans_choice('global.tenant.trainee', 1) }}</div>
+                <div class="panel-body">
+                    <table>
+
+                        {% for document in documents_trainee %}
+
+                            {% if document.id in contract.documentsId %}{% set value = true %}{% else %}{% set value = false %}{% endif %}
+
+                            <tr>
+                                <td>
+                                    {{ form_checkbox('documents[]', document.id, value) }}
+                                    {{ form_label(document.id, document.name) }}
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ trans_choice('global.tenant.employe', 1) }}</div>
+                <div class="panel-body">
+                    <table>
+
+                        {% for document in documents_employe %}
+
+                            {% if document.id in contract.documentsId %}{% set value = true %}{% else %}{% set value = false %}{% endif %}
+
+                            <tr>
+                                <td>
+                                    {{ form_checkbox('documents[]', document.id, value) }}
+                                    {{ form_label(document.id, document.name) }}
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ trans_choice('global.contract.guarantor', 2) }}</div>
+                <div class="panel-body">
+                    <table>
+
+                        {% for document in documents_guarantor %}
+
+                            {% if document.id in contract.documentsId %}{% set value = true %}{% else %}{% set value = false %}{% endif %}
+
+                            <tr>
+                                <td>
+                                    {{ form_checkbox('documents[]', document.id, value) }}
+                                    {{ form_label(document.id, document.name) }}
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ trans('global.contract.locapass') }}</div>
+                <div class="panel-body">
+                    <table>
+
+                        {% for document in documents_locapass %}
+
+                            {% if document.id in contract.documentsId %}{% set value = true %}{% else %}{% set value = false %}{% endif %}
+
+                            <tr>
+                                <td>
+                                    {{ form_checkbox('documents[]', document.id, value) }}
+                                    {{ form_label(document.id, document.name) }}
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_submit(trans('global.lbl.submit'), {'class': 'btn btn-success'}) }}
+    </div>
+
+    {{ form_close() }}
+
+{% endblock %}

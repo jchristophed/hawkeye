@@ -1,0 +1,84 @@
+<div class="panel panel-warning">
+    <div class="panel-heading">
+
+        {{ trans_choice('global.flat.title', 1) }}
+
+        {% if flat.id is not null %}
+            <div class="btn-group pull-right">
+                <a href="{{ route('residence.flat.show', [residence.id, flat.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-default btn-xs">{{ trans('global.lbl.show') }}</a>
+                <a href="{{ route('residence.flat.edit', [residence.id, flat.id]) }}" title="{{ trans('global.lbl.edit') }}" class="btn btn-default btn-xs">{{ trans('global.lbl.edit') }}</a>
+                <a href="javascript:void(0)" data-toggle="modal" data-target="#modal_destroy_flat" title="{{ trans('global.lbl.delete') }}" class="btn btn-danger btn-xs">{{ trans('global.lbl.delete') }}</a>
+            </div>
+        {% endif %}
+
+    </div>
+
+    <table class="table">
+
+        {% if flat.id is not null %}
+
+            <tr>
+                <td><span class="glyphicon glyphicon-circle-arrow-right"></span> {{ trans('global.flat.number') }}</td>
+                <td>{% if flat.name is not empty %}{{ flat.name }}{% endif %}</td>
+            </tr>
+
+            <tr>
+                <td><span class="glyphicon glyphicon-home"></span> {{ trans('global.flat.block') }}</td>
+                <td>{% if flat.block is not empty %}{{ flat.block }}{% endif %}</td>
+            </tr>
+
+            <tr>
+                <td><span class="glyphicon glyphicon-align-justify"></span> {{ trans('global.flat.floor') }}</td>
+                <td>{{ flat.floor_name }}</td>
+            </tr>
+
+            <tr>
+                <td><span class="glyphicon glyphicon-usd"></span> {{ trans('global.flat.price') }}</td>
+                <td>{% if flat.price is not empty %}{{ flat.full_price }}{% endif %}</td>
+            </tr>
+
+            <tr>
+                <td><span class="glyphicon glyphicon-fullscreen"></span> {{ trans('global.flat.area') }}</td>
+                <td>{% if flat.area is not empty %}{{ flat.full_area }}{% endif %}</td>
+            </tr>
+
+            <tr>
+                <td><span class="glyphicon glyphicon-eye-open"></span> {{ trans('global.flat.view') }}</td>
+                <td>{{ flat.view | capitalize }}</td>
+            </tr>
+
+        {% else %}
+
+            <tr>
+                <td class="text-danger">{{ trans('global.tenant.no_flat') }}</td>
+            </tr>
+
+        {% endif %}
+
+    </table>
+
+    {# modal suppression #}
+    <div class="modal fade" id="modal_destroy_flat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{{ trans('global.flat.delete') }}</h4>
+                </div>
+                <div class="modal-body">
+                    <p>{{ trans('global.flat.destroy') }} <strong>{{ flat.full_name }}</strong> ?</p>
+                </div>
+
+                <div class="modal-footer">
+                    {{ form_open({'method' : 'delete', 'route' : ['residence.flat.destroy', residence.id, flat.id]}) }}
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('global.lbl.close') }}</button>
+                    {{ form_submit(trans('global.lbl.delete'), {'class' : 'btn btn-danger'}) }}
+                    {{ form_close() }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {# fin modal suppression #}
+
+</div>

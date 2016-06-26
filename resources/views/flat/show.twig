@@ -1,0 +1,39 @@
+{% extends "layouts.app" %}
+
+{% block breadcrumb %}
+
+    <li><a href="{{ route('residence.flat.index', residence.id) }}" title="{{ trans_choice('global.flat.title', 2) }}">{{ trans_choice('global.flat.title', 2) }}</a></li>
+    <li class="active">{{ trans_choice('global.flat.title', 1) }} n°{{ flat.name }}</li>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+
+        <div class="col-sm-6">
+
+            {% include 'flat.info.twig' with {'flat' : flat} %}
+
+        </div>
+        <div class="col-sm-6">
+
+            {% include 'tenant.info.twig' with {'tenant' : contract.tenant} %}
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">{{ trans_choice('global.contract.title', 2) }}</div>
+
+                    {% include 'contract.listing.twig' with {'contracts' : contracts} %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>{{ trans('global.app.name') }}</title>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="container text-center" style="margin-top: 200px">
+        <h1 style="margin-bottom: 50px">{{ trans('global.app.name') }}</h1>
+
+            <div class="row">
+
+                {% for residence in residences %}
+
+                    <div class="col-sm-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><a href="{{ route('residence.index', residence.id) }}" title="{{ residence.name }}">{{ residence.name }}</a></h3>
+                            </div>
+                            <table class="table">
+                                <tr>
+                                    <td>{{ residence.nb_flats }} {{ trans_choice('global.flat.title', residence.nb_flats) | lower }}</td>
+                                </tr>
+                                <tr class="{% if residence.nb_free_flats > 0 %}danger{% else %}success{% endif %}">
+                                    <td>{{ residence.nb_free_flats }} {{ trans_choice('global.flat.empty', residence.nb_free_flats) | lower }}</td>
+                                </tr>
+                                <tr class="{% if residence.nb_incomplete_contracts > 0 %}danger{% else %}success{% endif %}">
+                                    <td>{{ residence.nb_incomplete_contracts }} {{ trans_choice('global.contract.incomplete', residence.nb_incomplete_contracts) | lower }}</td>
+                                </tr>
+                            </table>
+                            <div class="panel-footer text-right">
+                                <a href="{{ route('residence.index', residence.id) }}" class="btn btn-xs btn-success">Gérer</a>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+    </div>
+
+</body>
+</html>

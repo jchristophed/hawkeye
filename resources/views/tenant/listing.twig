@@ -1,0 +1,89 @@
+{% extends "layouts.app" %}
+
+{% block breadcrumb %}
+
+    <li class="active">{{ trans_choice('global.tenant.title', 2) }}</li>
+
+{% endblock %}
+
+{% block content %}
+
+    <a href="{{ route('residence.tenant.create', [residence.id]) }}" title="{{ trans('global.tenant.add') }}" class="btn btn-success pull-left">{{ trans('global.tenant.add') }}</a>
+
+    <table class="table text-center table-striped" data-toggle="table" data-toolbar="#toolbar"
+           data-locale="fr-FR"
+           data-classes="table-no-bordered"
+           data-search="true"
+           data-sortable="true"
+           data-sort-name="['lastname', 'firstname', 'status', 'company']"
+           data-show-refresh="true"
+           data-show-toggle="false"
+           data-show-columns="true"
+           data-minimum-count-columns="2"
+           data-pagination="true"
+           data-id-field="id"
+           data-page-size="10"
+           data-page-list="[10, 25, 50, 100, TOUS]"
+           data-show-footer="false">
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center" data-field="lastname" data-sortable="true">{{ trans('global.tenant.lastname') }}</th>
+                <th class="text-center" data-field="firtsname" data-sortable="true">{{ trans('global.tenant.firstname') }}</th>
+                <th class="text-center">{{ trans('global.tenant.birth_date') }}</th>
+                <th class="text-center" data-field="status" data-sortable="true">{{ trans('global.tenant.status') }}</th>
+                <th class="text-center" data-field="company" data-sortable="true">{{ trans('global.tenant.company') }}</th>
+                <th class="text-center">{{ trans_choice('global.lbl.actions', 2) }}</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for tenant in tenants %}
+
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{% if tenant.birth_date | date('m-d') == 'now' | date('m-d') %}<span class="glyphicon glyphicon-gift"></span> {% endif %}{{ tenant.lastname }}</td>
+                    <td>{{ tenant.firstname }}</td>
+                    <td>{{ tenant.birth_date | date('d/m/Y') }}</td>
+                    <td>{{ tenant.status | capitalize }}</td>
+                    <td>{{ tenant.company }}</td>
+                    <td>
+                        <div class="btn-group pull-right">
+                            <a href="{{ route('residence.tenant.show', [residence.id, tenant.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default">{{ trans('global.lbl.show') }}</a>
+                            <a href="{{ route('residence.tenant.edit', [residence.id, tenant.id]) }}" title="{{ trans('global.lbl.edit') }}" class="btn btn-xs btn-default">{{ trans('global.lbl.edit') }}</a>
+                            <a href="javascript:void(0)" title="{{ trans('global.lbl.delete') }}" data-toggle="modal" data-target="#modal_destroy{{ tenant.id }}" class="btn btn-xs btn-danger">{{ trans('global.lbl.delete') }}</a>
+                        </div>
+
+                        {# modal suppression #}
+                        <div class="modal fade" id="modal_destroy{{ tenant.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">{{ trans('global.tenant.delete') }}</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>{{ trans('global.tenant.destroy') }} <strong>{{ tenant.full_name }}</strong> ?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        {{ form_open({'method' : 'delete', 'route' : ['residence.tenant.destroy', residence.id, tenant.id]}) }}
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('global.lbl.close') }}</button>
+                                        {{ form_submit('Supprimer', {'class' : 'btn btn-danger'}) }}
+                                        {{ form_close() }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {# fin modal suppression #}
+
+                    </td>
+                </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+{% endblock %}

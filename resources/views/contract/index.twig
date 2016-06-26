@@ -1,0 +1,18 @@
+{% extends "layouts.app" %}
+
+{% block breadcrumb %}
+
+    <li class="active">{{ trans_choice('global.contract.title', 2) }}</li>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="clearfix"></div>
+    <div class="clearfix"></div>
+
+    <a href="{{ route('residence.contract.create', [residence.id]) }}" title="{{ trans('global.contract.add') }}" class="btn btn-success pull-left">{{ trans('global.contract.add') }}</a>
+
+    {% include 'contract.listing.twig' with{'bootstrap_table': true} %}
+
+{% endblock %}

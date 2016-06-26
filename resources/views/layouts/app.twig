@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <title>{{ trans('global.app.name') }}</title>
+
+        <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="/css/bootstrap-table.min.css" rel="stylesheet" type="text/css" media="all" />
+        <script type="text/javascript" src="/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/js/bootstrap-table.min.js"></script>
+        <script type="text/javascript" src="/js/bootstrap-table-fr-FR.js"></script>
+        <script type="text/javascript" src="/js/chart.min.js"></script>
+
+        <script type="text/javascript">
+
+            $(document).ready(function() {
+
+                $.datetimepicker.setLocale('fr');
+                $('.datetimepicker').datetimepicker({
+                    timepicker:false,
+                    format:'Y-m-d',
+                });
+
+            });
+
+        </script>
+
+    </head>
+
+    <body>
+
+        <nav class="navbar navbar-default navbar-static-top">
+            <div class="container-fluid">
+
+                <div class="container">
+
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="/"><span class="label label-info">{{ trans('global.app.name') }}</span></a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+
+                            {% if residence.id is not empty %}
+
+                                <li><a href="{{ route('residence.index', residence.id) }}" title="{{ residence.name }}" class="navbar-brand">{{ residence.name }}</a></li>
+
+                            {% endif %}
+
+                            <li {% if controller == 'FlatController' %}class="active"{% endif %}><a href="{{ route('residence.flat.index', residence.id) }}"><span class="glyphicon glyphicon-home"></span> {{ trans_choice('global.flat.title', 2) }}</a></li>
+                            <li {% if controller == 'TenantController' %}class="active"{% endif %}><a href="{{ route('residence.tenant.index', residence.id) }}"><span class="glyphicon glyphicon-user"></span> {{ trans_choice('global.tenant.title', 2) }}</a></li>
+                            <li {% if controller == 'ContractController' %}class="active"{% endif %}><a href="{{ route('residence.contract.index', residence.id) }}"><span class="glyphicon glyphicon-duplicate"></span> {{ trans_choice('global.contract.title', 2) }}</a></li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+        </nav>
+
+        <div class="container">
+
+            {# breadcrumb #}
+            <ol class="breadcrumb">
+                {% block breadcrumb %}{% endblock %}
+            </ol>
+
+            {# flash message #}
+            {% if session_has('ok') %}
+                <div class="alert alert-success">{{ session_get('ok') }}</div>
+            {% endif %}
+
+            {% block content %}{% endblock %}
+
+        </div>
+
+    </body>
+
+    <link rel="stylesheet" type="text/css" href="/css/datetimepicker.css" />
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/datetimepicker.min.js"></script>
+
+</html>
