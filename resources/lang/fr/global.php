@@ -64,12 +64,18 @@ return [
         'age'                   => 'Âge',
         'birth_date'            => 'Date de naissance',
         'status'                => 'Statut',
+        'contract'              => 'Contract',
         'company'               => 'Entreprise',
         'birth_day'             => 'C\'est son anniversaire !',
         'year'                  => 'an|ans',
         'student'               => 'Etudiant|Etudiants',
         'trainee'               => 'Stagiaire|Stagiaires',
         'employe'               => 'Salarié|Salariés',
+
+        'new'                   => 'Nouveau|Nouveaux',
+        'old'                   => 'Renouvellement|Renouvellements',
+        'cancel'                => 'Résiliation|Résiliations',
+        'departure'             => 'Départ|Départs',
 
         'action_prefix'         => 'Le locataire',
     ],

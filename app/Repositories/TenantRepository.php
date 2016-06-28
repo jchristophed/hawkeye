@@ -29,6 +29,11 @@ class TenantRepository implements TenantRepositoryInterface {
         return $this->tenant->where('residence_id', $residenceId)->where('status', $status)->count();
     }
 
+    public function getNbByContract($residenceId, $contract) {
+
+        return $this->tenant->where('residence_id', $residenceId)->where('contract', $contract)->count();
+    }
+
     public function getById($id) {
 
         return $this->tenant->findOrFail($id);
@@ -40,6 +45,7 @@ class TenantRepository implements TenantRepositoryInterface {
         $tenant->lastname = $inputs['lastname'];
         $tenant->birth_date = $inputs['birth_date'];
         $tenant->status = $inputs['status'];
+        $tenant->contract = $inputs['contract'];
         $tenant->company = $inputs['company'];
         $tenant->residence_id = $inputs['residence_id'];
 

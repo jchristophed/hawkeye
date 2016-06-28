@@ -32,6 +32,7 @@
                 <th class="text-center" data-field="firtsname" data-sortable="true">{{ trans('global.tenant.firstname') }}</th>
                 <th class="text-center">{{ trans('global.tenant.birth_date') }}</th>
                 <th class="text-center" data-field="status" data-sortable="true">{{ trans('global.tenant.status') }}</th>
+                <th class="text-center" data-field="status" data-sortable="true">{{ trans('global.tenant.contract') }}</th>
                 <th class="text-center" data-field="company" data-sortable="true">{{ trans('global.tenant.company') }}</th>
                 <th class="text-center">{{ trans_choice('global.lbl.actions', 2) }}</th>
             </tr>
@@ -46,7 +47,8 @@
                     <td>{% if tenant.birth_date | date('m-d') == 'now' | date('m-d') %}<span class="glyphicon glyphicon-gift"></span> {% endif %}{{ tenant.lastname }}</td>
                     <td>{{ tenant.firstname }}</td>
                     <td>{{ tenant.birth_date | date('d/m/Y') }}</td>
-                    <td>{{ tenant.status | capitalize }}</td>
+                    <td>{{ tenant.status }}</td>
+                    <td>{{ tenant.contract }}</td>
                     <td>{{ tenant.company }}</td>
                     <td>
                         <div class="btn-group pull-right">

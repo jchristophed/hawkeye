@@ -36,7 +36,7 @@ class FlatRepository implements FlatRepositoryInterface {
     // retourne la liste des logements pour la liste déroulante d'un nouveau contrat
     public function indexForNewContract($residenceId) {
 
-        return $this->scopeOnResidenceOnly($residenceId)->orderBy('block', 'asc')->orderBy('name', 'asc')->get()->pluck('full_name', 'id');
+        return $this->scopeOnResidenceOnly($residenceId)->orderBy('name', 'asc')->get()->pluck('name', 'id');
     }
 
     // retourne la liste des logements inoccupés

@@ -6,6 +6,7 @@ use App\Repositories\TenantRepositoryInterface;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Lang;
 
 use App\Repositories\ResidenceRepositoryInterface;
 use App\Repositories\FlatRepositoryInterface;
@@ -48,9 +49,9 @@ class DashboardController extends Controller
         $nbContractsWithRequiredDocuments = $this->contractRepository->getNbIncompleteContracts($residenceId);
         $nbContractsWithoutRequiredDocuments = $this->contractRepository->getNbCompleteContracts($residenceId);
 
-        $nbEmployeTenants = $this->tenantRepository->getNbByStatus($residenceId, 'Salarié');
-        $nbTraineeTenants = $this->tenantRepository->getNbByStatus($residenceId, 'Stagiaire');
-        $nbStudentTenants = $this->tenantRepository->getNbByStatus($residenceId, 'Etudiant');
+        $nbNewTenants = $this->tenantRepository->getNbByContract($residenceId, Lang::choice('global.tenant.new', 1));
+        $nbOldTenants = $this->tenantRepository->getNbByContract($residenceId, Lang::choice('global.tenant.old', 1));
+        $nbCancelTenants = $this->tenantRepository->getNbByContract($residenceId, Lang::choice('global.tenant.cancel', 1));
 
         return view('dashboard.listing', [  'flats' => $freeFlats,
                                             'contracts' => $contractsWithRequiredDocuments,
@@ -59,8 +60,10 @@ class DashboardController extends Controller
                                             'nb_occupied_flats' => $nbOccupiedFlats,
                                             'nb_contracts_with_required_documents' => $nbContractsWithRequiredDocuments,
                                             'nb_contracts_without_required_documents' => $nbContractsWithoutRequiredDocuments,
-                                            'nb_employe_tenants' => $nbEmployeTenants,
-                                            'nb_trainee_tenants' => $nbTraineeTenants,
-                                            'nb_student_tenants' => $nbStudentTenants]);
+                                            'nb_new_tenants' => $nbNewTenants,
+                                            'nb_old_tenants' => $nbOldTenants,
+                                            'nb_cancel_tenants' => $nbCancelTenants
+                                        ]
+        );
     }
 }

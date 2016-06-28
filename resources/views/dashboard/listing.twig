@@ -164,23 +164,22 @@
 
             var data_tenants = {
                 labels: [
-                    "{{ trans_choice('global.tenant.student', 2) }}",
-                    "{{ trans_choice('global.tenant.trainee', 2) }}",
-                    "{{ trans_choice('global.tenant.employe', 2) }}"
+                    "{{ trans_choice('global.tenant.new', 2) }}",
+                    "{{ trans_choice('global.tenant.old', 2) }}",
+                    "{{ trans_choice('global.tenant.cancel', 2) }}"
                 ],
                 datasets: [
                     {
-                        data: [{{ nb_student_tenants }}, {{ nb_trainee_tenants }}, {{ nb_employe_tenants }}],
+                        data: [{{ nb_new_tenants }}, {{ nb_old_tenants }}, {{ nb_cancel_tenants }}],
                         backgroundColor: [
-                            "#004358",
+                            "#BEDB39",
                             "#1F8A70",
-                            "#BEDB39"
-
+                            "#FF5347"
                         ],
                         hoverBackgroundColor: [
-                            "#004358",
+                            "#BEDB39",
                             "#1F8A70",
-                            "#BEDB39"
+                            "#FF5347"
                         ]
                     }]
             };
