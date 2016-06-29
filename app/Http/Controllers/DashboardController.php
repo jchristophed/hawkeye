@@ -51,7 +51,7 @@ class DashboardController extends Controller
 
         $nbNewTenants = $this->tenantRepository->getNbByContract($residenceId, Lang::choice('global.tenant.new', 1));
         $nbOldTenants = $this->tenantRepository->getNbByContract($residenceId, Lang::choice('global.tenant.old', 1));
-        $nbCancelTenants = $this->tenantRepository->getNbByContract($residenceId, Lang::choice('global.tenant.cancel', 1));
+        $nbPassengerTenants = $this->tenantRepository->getNbByContract($residenceId, Lang::choice('global.tenant.passenger', 1));
 
         return view('dashboard.listing', [  'flats' => $freeFlats,
                                             'contracts' => $contractsWithRequiredDocuments,
@@ -62,7 +62,7 @@ class DashboardController extends Controller
                                             'nb_contracts_without_required_documents' => $nbContractsWithoutRequiredDocuments,
                                             'nb_new_tenants' => $nbNewTenants,
                                             'nb_old_tenants' => $nbOldTenants,
-                                            'nb_cancel_tenants' => $nbCancelTenants
+                                            'nb_passenger_tenants' => $nbPassengerTenants
                                         ]
         );
     }

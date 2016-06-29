@@ -64,7 +64,7 @@ return [
         'age'                   => 'Âge',
         'birth_date'            => 'Date de naissance',
         'status'                => 'Statut',
-        'contract'              => 'Contract',
+        'contract'              => 'Contrat',
         'company'               => 'Entreprise',
         'birth_day'             => 'C\'est son anniversaire !',
         'year'                  => 'an|ans',
@@ -74,9 +74,7 @@ return [
 
         'new'                   => 'Nouveau|Nouveaux',
         'old'                   => 'Renouvellement|Renouvellements',
-        'cancel'                => 'Résiliation|Résiliations',
-        'departure'             => 'Départ|Départs',
-
+        'passenger'             => 'Passager|Passagers',
         'action_prefix'         => 'Le locataire',
     ],
 

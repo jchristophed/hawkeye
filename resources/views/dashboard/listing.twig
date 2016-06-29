@@ -166,11 +166,11 @@
                 labels: [
                     "{{ trans_choice('global.tenant.new', 2) }}",
                     "{{ trans_choice('global.tenant.old', 2) }}",
-                    "{{ trans_choice('global.tenant.cancel', 2) }}"
+                    "{{ trans_choice('global.tenant.passenger', 2) }}"
                 ],
                 datasets: [
                     {
-                        data: [{{ nb_new_tenants }}, {{ nb_old_tenants }}, {{ nb_cancel_tenants }}],
+                        data: [{{ nb_new_tenants }}, {{ nb_old_tenants }}, {{ nb_passenger_tenants }}],
                         backgroundColor: [
                             "#BEDB39",
                             "#1F8A70",

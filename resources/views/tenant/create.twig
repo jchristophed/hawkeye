@@ -46,7 +46,7 @@
     {# Contrat #}
     <div class="form-group {% if errors.messages.contract is not empty %}has-error{% endif %}">
         {{ form_label('contract', trans('global.tenant.contract')) }}
-        {% set values = {(trans_choice('global.tenant.new', 1)) : trans_choice('global.tenant.new', 1), (trans_choice('global.tenant.old', 1)) : trans_choice('global.tenant.old', 1), (trans_choice('global.tenant.cancel', 1)) : trans_choice('global.tenant.cancel', 1), (trans_choice('global.tenant.departure', 1)) : trans_choice('global.tenant.departure', 1)} %}
+        {% set values = {(trans_choice('global.tenant.new', 1)) : trans_choice('global.tenant.new', 1), (trans_choice('global.tenant.old', 1)) : trans_choice('global.tenant.old', 1), (trans_choice('global.tenant.passenger', 1)) : trans_choice('global.tenant.passenger', 1)} %}
         {{ form_select('contract', values, null, {'class': 'form-control'}) }}
         {% if errors.messages.contract is not empty %}<span class="label label-danger">{{ errors.messages.contract | first }}</span>{% endif %}
     </div>
