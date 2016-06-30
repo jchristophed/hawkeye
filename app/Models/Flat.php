@@ -10,6 +10,8 @@ class Flat extends Model
     protected $table = 'flat';
 
     public $timestamps = false;
+    private $contract;
+    private $next_contract;
 
     // retourne le nom complet du logement
     public function getFullNameAttribute() {
@@ -36,4 +38,21 @@ class Flat extends Model
 
         return $this->hasMany('App\Models\Contract');
     }
+
+    public function getContractAttribute() {
+        return $this->contract;
+    }
+
+    public function setContract($value) {
+        $this->contract = $value;
+    }
+
+    public function getNextContractAttribute() {
+        return $this->next_contract;
+    }
+
+    public function setNextContract($value) {
+        $this->next_contract = $value;
+    }
+
 }

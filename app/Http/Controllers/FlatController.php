@@ -54,6 +54,13 @@ class FlatController extends Controller
     public function index($residenceId)
     {
         $flats = $this->flatRepository->index($residenceId);
+
+        foreach($flats as $flat) {
+
+            $flat->setContract($this->contractRepository->getActiveByFlat($residenceId, $flat));
+            $flat->setNextContract($this->contractRepository->getNextByFlat($residenceId, $flat));
+        }
+
         return view('flat.listing', ['flats' => $flats]);
     }
 

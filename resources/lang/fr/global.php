@@ -37,6 +37,7 @@ return [
         'empty'                 => 'Logement vide|Logements vides',
         'full'                  => 'Logements occupés',
         'allfull'               => 'Tous les logements sont occupés',
+        'relet'                 => 'Reloué le',
 
         'number'                => 'Numéro',
         'block'                 => 'Bâtiment',

@@ -22,7 +22,7 @@
            data-minimum-count-columns="2"
            data-pagination="true"
            data-id-field="id"
-           data-page-size="10"
+           data-page-size="100"
            data-page-list="[10, 25, 50, 100, TOUS]"
            data-show-footer="false">
 
@@ -35,7 +35,10 @@
                 <th class="text-center" data-field="area" data-sortable="true">{{ trans('global.flat.area') }}</th>
                 <th class="text-center" data-field="price" data-sortable="true">{{ trans('global.flat.price') }}</th>
                 <th class="text-center" data-field="view" data-sortable="true">{{ trans('global.flat.view') }}</th>
+                <th class="text-center" data-field="contract" data-sortable="true">{{ trans_choice('global.tenant.title', 1) }}</th>
                 <th class="text-center">{{ trans_choice('global.lbl.actions', 2) }}</th>
+                <th class="text-center">{{ trans('global.tenant.contract') }}</th>
+                <th class="text-center">test</th>
             </tr>
         </thead>
 
@@ -43,7 +46,7 @@
 
             {% for flat in flats %}
 
-                <tr>
+                <tr {% if flat.contract.id is empty %}class="danger"{% endif %}>
                     <td>{{ loop.index }}</td>
                     <td>{{ flat.block }}</td>
                     <td>{{ flat.floor }}</td>
@@ -51,37 +54,14 @@
                     <td>{{ flat.full_area }}</td>
                     <td>{{ flat.full_price }}</td>
                     <td>{{ flat.view | capitalize }}</td>
+                    <td>{% if flat.contract.tenant.id is not empty %}{{ flat.contract.tenant.full_name }}{% endif %}</td>
+                    <td>{{ flat.contract.tenant.contract }}</td>
+                    <td>{% if flat.next_contract.id is not empty %}<a href="{{ route('residence.contract.show', [residence.id, flat.next_contract.id]) }}" class="label label-success">{{ trans('global.flat.relet') }} {{ flat.next_contract.start_date | date('d/m/y') }}</a>{% endif %}</td>
                     <td>
                         <div class="btn-group pull-right">
                             <a href="{{ route('residence.flat.show', [residence.id, flat.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default">{{ trans('global.lbl.show') }}</a>
                             <a href="{{ route('residence.flat.edit', [residence.id, flat.id]) }}" title="{{ trans('global.lbl.edit') }}" class="btn btn-xs btn-default">{{ trans('global.lbl.edit') }}</a>
-                            <a href="javascript:void(0)" title="{{ trans('global.lbl.delete') }}" data-toggle="modal" data-target="#modal_destroy{{ flat.id }}" class="btn btn-xs btn-danger">{{ trans('global.lbl.delete') }}</a>
                         </div>
-
-                        {# modal suppression #}
-                        <div class="modal fade" id="modal_destroy{{ flat.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title">{{ trans('global.flat.delete') }}</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>{{ trans('global.flat.destroy') }} <strong>{{ flat.full_name }}</strong> ?</p>
-                                    </div>
-
-                                    <div class="modal-footer">
-                                        {{ form_open({'method' : 'delete', 'route' : ['residence.flat.destroy', residence.id, flat.id]}) }}
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('global.lbl.close') }}</button>
-                                            {{ form_submit(trans('global.lbl.delete'), {'class' : 'btn btn-danger'}) }}
-                                        {{ form_close() }}
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        {# fin modal suppression #}
-
                     </td>
                 </tr>
 

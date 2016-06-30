@@ -28,10 +28,10 @@ class ContractRepository implements ContractRepositoryInterface {
     private function scopeRunningOnResidenceOnly($residenceId) {
 
         return $this    ->scopeOnResidenceOnly($residenceId)
-                        ->where('end_date', '>=', date('Y-m-d'))
-                        ->orWhere(function ($query2) {
+                        ->where(function ($query2) {
                                   $query2
-                                  ->where('end_date', '=', '0000-00-00');
+                                      ->where('end_date', '>=', date('Y-m-d'))
+                                      ->orWhere('end_date', '=', '0000-00-00');
                         });
     }
 
@@ -107,13 +107,24 @@ class ContractRepository implements ContractRepositoryInterface {
     // retourne le contrat actif d'un logement
     public function getActiveByFlat($residenceId, Flat $flat) {
 
-        return $this->indexRunning($residenceId)->where('flat_id', '=',  $flat->id)->first();
+        return $this->scopeRunningOnResidenceOnly($residenceId)->where('flat_id', '=',  $flat->id)->first();
     }
 
     // retourne le contrat actif d'un locataire
     public function getActiveByTenant($residenceId, Tenant $tenant) {
 
-        return $this->indexRunning($residenceId)->where('tenant_id', '=', $tenant->id)->first();
+        return $this->scopeRunningOnResidenceOnly($residenceId)->where('tenant_id', '=', $tenant->id)->first();
+    }
+
+    // retourne le prochain contrat actif d'un logement
+    public function getNextByFlat($residenceId, Flat $flat) {
+
+        return $this    ->scopeOnResidenceOnly($residenceId)
+                        ->select('contract.id', 'contract.start_date', 'contract.end_date', 'contract.price', 'contract.application_fee', 'contract.deposit', 'contract.mode_of_payment', 'contract.flat_id', 'contract.tenant_id')
+                        ->where('start_date', '>', date('Y-m-d'))
+                        ->where('flat_id', '=',  $flat->id)
+                        ->orderBy('start_date', 'asc')
+                        ->first();
     }
 
     // hydrate un contrat depuis un formulaire
