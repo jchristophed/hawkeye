@@ -41,6 +41,13 @@ class DashboardController extends Controller
     public function index($residenceId)
     {
         $freeFlats = $this->flatRepository->indexUnoccupied($residenceId);
+
+        foreach($freeFlats as $flat) {
+
+            $flat->setContract($this->contractRepository->getActiveByFlat($residenceId, $flat));
+            $flat->setNextContract($this->contractRepository->getNextByFlat($residenceId, $flat));
+        }
+
         $contractsWithRequiredDocuments = $this->contractRepository->indexIncomplete($residenceId);
 
         $nbFreeFlats = $this->flatRepository->getNbFreeFlats($residenceId);

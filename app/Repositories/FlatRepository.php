@@ -44,7 +44,7 @@ class FlatRepository implements FlatRepositoryInterface {
 
         return  $this->scopeOnResidenceOnly($residenceId)
                 ->select('flat.id', 'flat.block', 'flat.floor', 'flat.name', 'flat.price', 'flat.area', 'flat.view')
-                ->whereNotIn('flat.id', $this->contractRepository->indexRunningId($residenceId))
+                ->whereNotIn('flat.id', $this->contractRepository->indexRunningFlatId($residenceId))
                 ->get();
     }
 

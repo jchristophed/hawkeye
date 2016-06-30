@@ -7,15 +7,37 @@ use App\Models\Tenant;
 class TenantRepository implements TenantRepositoryInterface {
 
     protected $tenant;
+    protected $contractRepository;
 
-    public function __construct(Tenant $tenant) {
+    public function __construct(Tenant $tenant, ContractRepositoryInterface $contractRepositoryInterface) {
 
         $this->tenant = $tenant;
+        $this->contractRepository = $contractRepositoryInterface;
     }
+
+    // SCOPES
+    // --------------------
+
+    // retourne uniquement les logements d'une résidence
+    private function scopeOnResidenceOnly($residenceId) {
+
+        return $this->tenant->where('tenant.residence_id', $residenceId);
+    }
+
+    // selectionne les locataires ayant un logement
+    public function scopeHasFlat($residenceId) {
+
+        return  $this   ->scopeOnResidenceOnly($residenceId)
+                        ->select('tenant.id', 'tenant.firstname', 'tenant.lastname', 'tenant.birth_date', 'tenant.status', 'tenant.contract', 'tenant.company')
+                        ->whereIn('tenant.id', $this->contractRepository->indexRunningTenantId($residenceId));
+    }
+
+    // LISTING
+    // --------------------
 
     public function index($residenceId) {
 
-        return $this->tenant->where('residence_id', $residenceId)->orderBy('lastname', 'asc')->get();
+        return $this->scopeOnResidenceOnly($residenceId)->orderBy('lastname', 'asc')->get();
     }
 
     // retourne la liste des locataires pour la liste déroulante d'un nouveau contrat
@@ -24,6 +46,9 @@ class TenantRepository implements TenantRepositoryInterface {
         return $this->tenant->where('residence_id', $residenceId)->orderBy('lastname', 'asc')->get()->pluck('full_name', 'id');
     }
 
+    // COMPTEURS
+    // --------------------
+
     public function getNbByStatus($residenceId, $status) {
 
         return $this->tenant->where('residence_id', $residenceId)->where('status', $status)->count();
@@ -31,8 +56,11 @@ class TenantRepository implements TenantRepositoryInterface {
 
     public function getNbByContract($residenceId, $contract) {
 
-        return $this->tenant->where('residence_id', $residenceId)->where('contract', $contract)->count();
+        return $this->scopeHasFlat($residenceId)->where('contract', $contract)->count();
     }
+
+    // UNIQUE
+    // --------------------
 
     public function getById($id) {
 

@@ -21,13 +21,16 @@ class ContractRepository implements ContractRepositoryInterface {
     // retourne uniquement les contrats d'une résidence
     private function scopeOnResidenceOnly($residenceId) {
 
-        return $this->contract->join('flat', 'contract.flat_id', '=', 'flat.id')->where('flat.residence_id', $residenceId);
+        return $this->contract  ->join('flat', 'contract.flat_id', '=', 'flat.id')
+                                ->join('tenant', 'contract.tenant_id', '=', 'tenant.id')
+                                ->where('flat.residence_id', $residenceId);
     }
 
     // retourne uniquement les contrats en cours
     private function scopeRunningOnResidenceOnly($residenceId) {
 
         return $this    ->scopeOnResidenceOnly($residenceId)
+                        ->where('start_date', '<=', date('Y-m-d'))
                         ->where(function ($query2) {
                                   $query2
                                       ->where('end_date', '>=', date('Y-m-d'))
@@ -41,7 +44,7 @@ class ContractRepository implements ContractRepositoryInterface {
     // retourne tous les contrats d'une résidence
     public function index($residenceId) {
 
-        return $this->scopeOnResidenceOnly($residenceId)->get();
+        return $this->scopeOnResidenceOnly($residenceId)->select('contract.id', 'contract.start_date', 'contract.end_date', 'contract.price', 'contract.application_fee', 'contract.deposit', 'contract.mode_of_payment', 'contract.flat_id', 'contract.tenant_id')->get();
     }
 
     // retourne tous les contrats en cours d'une résidence
@@ -50,10 +53,16 @@ class ContractRepository implements ContractRepositoryInterface {
         return $this->scopeRunningOnResidenceOnly($residenceId)->get();
     }
 
-    // retourne tous les id contrats en cours d'une résidence
-    public function indexRunningId($residenceId) {
+    // retourne tous les id des appartements ayant un contrat en cours
+    public function indexRunningFlatId($residenceId) {
 
         return $this->scopeRunningOnResidenceOnly($residenceId)->select('contract.flat_id')->get();
+    }
+
+    // retourne tous les id des locataires ayant un contrat en cours
+    public function indexRunningTenantId($residenceId) {
+
+        return $this->scopeRunningOnResidenceOnly($residenceId)->select('contract.tenant_id')->get();
     }
 
     // retourne les contrats incomplets
@@ -107,7 +116,9 @@ class ContractRepository implements ContractRepositoryInterface {
     // retourne le contrat actif d'un logement
     public function getActiveByFlat($residenceId, Flat $flat) {
 
-        return $this->scopeRunningOnResidenceOnly($residenceId)->where('flat_id', '=',  $flat->id)->first();
+        return $this    ->scopeRunningOnResidenceOnly($residenceId)
+                        ->select('contract.id', 'contract.start_date', 'contract.end_date', 'contract.price', 'contract.application_fee', 'contract.deposit', 'contract.mode_of_payment', 'contract.flat_id', 'contract.tenant_id')
+                        ->where('flat_id', '=',  $flat->id)->first();
     }
 
     // retourne le contrat actif d'un locataire

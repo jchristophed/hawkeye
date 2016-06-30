@@ -35,9 +35,13 @@ return [
 
         'no_tenant'             => 'Ce logement n\'est pas loué en ce moment',
         'empty'                 => 'Logement vide|Logements vides',
-        'full'                  => 'Logements occupés',
-        'allfull'               => 'Tous les logements sont occupés',
+        'empty_relet'           => 'Vide reloué|Vides reloués',
+        'empty_not_relet'       => 'Vide non reloué|Vides non reloués',
+        'full'                  => 'Occupés',
+        'all_full'              => 'Tous les logements sont occupés',
+        'no_flat'               => 'Aucun logement',
         'relet'                 => 'Reloué le',
+        'end'                   => 'Fin le',
 
         'number'                => 'Numéro',
         'block'                 => 'Bâtiment',
@@ -90,6 +94,7 @@ return [
         'incomplete'            => 'Contrat incomplet|Contrats incomplets',
         'complete'              => 'Contrats complets',
         'all_complete'          => 'Tous les contrats sont complets',
+        'deadline'              => 'Échéance',
 
         'start_date'            => 'Date de début',
         'end_date'              => 'Date de fin',

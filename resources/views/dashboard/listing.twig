@@ -1,5 +1,8 @@
 {% extends "layouts.app" %}
 
+{% set nb_empty_flats_relet = 0 %}
+{% set nb_empty_flats_not_relet = 0 %}
+
 {% block breadcrumb %}
 
     <li class="active">{{ trans('global.app.dashboard') }}</li>
@@ -11,65 +14,60 @@
     <div class="row text-center" style="margin-bottom: 40px">
         <div class="col-sm-4">
             <h4>{{ trans_choice('global.flat.title', 2) }}</h4>
-            <canvas id="myChart" ></canvas>
+            <canvas id="myChart" height="200"></canvas>
 
         </div>
-        <div class="col-sm-4">
-            <h4>{{ trans_choice('global.contract.title', 2) }}</h4>
-            <canvas id="myChart2" ></canvas>
 
-        </div>
         <div class="col-sm-4">
             <h4>{{ trans_choice('global.tenant.title', 2) }}</h4>
-            <canvas id="myChart3" ></canvas>
+            <canvas id="myChart3" height="200"></canvas>
 
         </div>
+
+        <div class="col-sm-4">
+            <h4>{{ trans_choice('global.contract.title', 2) }}</h4>
+            <canvas id="myChart2" height="200"></canvas>
+
+        </div>
+
     </div>
     <div class="clearfix"></div>
 
-
     <div class="row">
 
-        <div class="col-sm-7">
+        <div class="col-sm-4">
             <div class="panel panel-danger">
-                <div class="panel-heading">{{ trans_choice('global.flat.empty', 2) }}</div>
+                <div class="panel-heading">{{ trans_choice('global.flat.title', 2) }} {{ trans_choice('global.flat.empty_not_relet', 2) | lower }}</div>
                 <table class="table text-center">
 
                     <thead>
                         <tr>
                             <th class="text-center">#</th>
-                            <th class="text-center">{{ trans('global.flat.block') }}</th>
-                            <th class="text-center">{{ trans('global.flat.floor') }}</th>
                             <th class="text-center">{{ trans('global.lbl.num') }}</th>
-                            <th class="text-center">{{ trans('global.flat.area') }}</th>
                             <th class="text-center">{{ trans('global.flat.price') }}</th>
-                            <th class="text-center">{{ trans('global.flat.view') }}</th>
+                            <th class="text-center">{{ trans('global.flat.area') }}</th>
                             <th class="text-center"></th>
                         </tr>
                     </thead>
 
-                    {% for flat in flats if flats is not empty%}
+                    {% for flat in flats if flat.next_contract.id is empty %}
 
                         <tr>
                             <td>{{ loop.index }}</td>
-                            <td>{{ flat.block }}</td>
-                            <td>{{ flat.floor }}</td>
                             <td>{{ flat.name }}</td>
-                            <td>{{ flat.full_area }}</td>
                             <td>{{ flat.full_price }}</td>
-                            <td>{{ flat.view | capitalize }}</td>
+                            <td>{{ flat.full_area }}</td>
                             <td>
-                                <div class="btn-group pull-right">
-                                    <a href="{{ route('residence.flat.show', [residence.id, flat.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default">{{ trans('global.lbl.show') }}</a>
-                                    <a href="{{ route('residence.flat.edit', [residence.id, flat.id]) }}" title="{{ trans('global.lbl.edit') }}" class="btn btn-xs btn-default">{{ trans('global.lbl.edit') }}</a>
-                                </div>
+                                <a href="{{ route('residence.flat.show', [residence.id, flat.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default pull-right">{{ trans('global.lbl.show') }}</a>
                             </td>
                         </tr>
+
+                        {% set nb_empty_flats_not_relet = loop.index %}
 
                     {% else %}
 
                         <tr>
-                            <td colspan="8" class="text-danger">{{ trans('global.flat.all_full') }}</td>
+                            <td colspan="8" class="text-danger">{{ trans('global.flat.no_flat') }}</td>
                         </tr>
 
                     {% endfor %}
@@ -78,7 +76,51 @@
             </div>
         </div>
 
-        <div class="col-sm-5">
+        <div class="col-sm-4">
+            <div class="panel panel-warning">
+                <div class="panel-heading">{{ trans_choice('global.flat.title', 2) }} {{ trans_choice('global.flat.empty_relet', 2) | lower }}</div>
+                <table class="table text-center">
+
+                    <thead>
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th class="text-center">{{ trans('global.lbl.num') }}</th>
+                        <th class="text-center">{{ trans('global.flat.price') }}</th>
+                        <th class="text-center">{{ trans('global.contract.deadline') }}</th>
+                        <th class="text-center"></th>
+                    </tr>
+                    </thead>
+
+                    {% for flat in flats if flat.next_contract.id is not empty %}
+
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ flat.name }}</td>
+                            <td>{{ flat.full_price }}</td>
+                            <td>
+                                {% if flat.contract.id is not empty and flat.contract.end_date != '0000-00-00' %}<a href="{{ route('residence.contract.show', [residence.id, flat.contract.id]) }}" class="label label-danger" style="text-decoration: none">{{ trans('global.flat.end') }} {{ flat.contract.end_date | date('d/m/y') }}</a>{% endif %}
+                                {% if flat.next_contract.id is not empty %}<a href="{{ route('residence.contract.show', [residence.id, flat.next_contract.id]) }}" class="label label-success" style="text-decoration: none">{{ trans('global.flat.relet') }} {{ flat.next_contract.start_date | date('d/m/y') }}</a>{% endif %}
+                            </td>
+                            <td>
+                                <a href="{{ route('residence.flat.show', [residence.id, flat.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default pull-right">{{ trans('global.lbl.show') }}</a>
+                            </td>
+                        </tr>
+
+                        {% set nb_empty_flats_relet = loop.index %}
+
+                    {% else %}
+
+                        <tr>
+                            <td colspan="8" class="text-danger">{{ trans('global.flat.no_flat') }}</td>
+                        </tr>
+
+                    {% endfor %}
+
+                </table>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
             <div class="panel panel-info">
                 <div class="panel-heading">{{ trans_choice('global.contract.incomplete', 2) }}</div>
                 <table class="table text-center">
@@ -86,8 +128,8 @@
                     <thead>
                     <tr>
                         <th class="text-center">#</th>
-                        <th class="text-center">{{ trans_choice('global.flat.title', 2) }}</th>
-                        <th class="text-center">{{ trans_choice('global.tenant.title', 2) }}</th>
+                        <th class="text-center">{{ trans_choice('global.flat.title', 1) }}</th>
+                        <th class="text-center">{{ trans_choice('global.tenant.title', 1) }}</th>
                         <th class="text-center"></th>
                     </tr>
                     </thead>
@@ -96,13 +138,10 @@
 
                         <tr>
                             <td>{{ loop.index }}</td>
-                            <td>{{ contract.flat.full_name }}</td>
-                            <td>{{ contract.tenant.full_name }}</td>
+                            <td><a href="{{ route('residence.flat.show', [residence.id, contract.flat.id]) }}" title="{{ contract.flat.name }}">{{ contract.flat.name }}</a></td>
+                            <td><a href="{{ route('residence.tenant.show', [residence.id, contract.tenant.id]) }}" title="{{ contract.tenant.full_name }}">{{ contract.tenant.full_name }}</a></td>
                             <td>
-                                <div class="btn-group pull-right">
-                                    <a href="{{ route('residence.contract.show', [residence.id, contract.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default">{{ trans('global.lbl.show') }}</a>
-                                    <a href="{{ route('residence.contract.edit', [residence.id, contract.id]) }}" title="{{ trans('global.lbl.edit') }}" class="btn btn-xs btn-default">{{ trans('global.lbl.edit') }}</a>
-                                </div>
+                                <a href="{{ route('residence.contract.show', [residence.id, contract.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default pull-right">{{ trans('global.lbl.show') }}</a>
                             </td>
                         </tr>
 
@@ -126,18 +165,21 @@
             var data_flats = {
                 labels: [
                     "{{ trans('global.flat.full') }}",
-                    "{{ trans_choice('global.flat.empty', 2) }}"
+                    "{{ trans_choice('global.flat.empty_not_relet', 2) }}",
+                    "{{ trans_choice('global.flat.empty_relet', 2) }}"
                 ],
                 datasets: [
                     {
-                        data: [{{ nb_occupied_flats }}, {{ nb_free_flats }}],
+                        data: [{{ nb_occupied_flats }}, {{ nb_empty_flats_not_relet }}, {{ nb_empty_flats_relet }}],
                         backgroundColor: [
                             "#BEDB39",
-                            "#FF5347"
+                            "#FF5347",
+                            "#FFCF00"
                         ],
                         hoverBackgroundColor: [
                             "#BEDB39",
-                            "#FF5347"
+                            "#FF5347",
+                            "#FFCF00"
                         ]
                     }]
             };

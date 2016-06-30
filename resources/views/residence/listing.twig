@@ -34,7 +34,10 @@
                                 </tr>
                             </table>
                             <div class="panel-footer text-right">
-                                <a href="{{ route('residence.index', residence.id) }}" class="btn btn-xs btn-success">Gérer</a>
+                                <div class="btn-group">
+                                    <a href="{{ route('residence.index', residence.id) }}" title="{{ trans('global.app.dashboard') }}" class="btn btn-default btn-xs">{{ trans('global.app.dashboard') }}</a>
+                                    <a href="{{ route('residence.flat.index', residence.id) }}" title="{{ trans_choice('global.flat.title', 2) }}" class="btn btn-default btn-xs">{{ trans_choice('global.flat.title', 2) }}</a>
+                                </div>
                             </div>
                         </div>
                     </div>
