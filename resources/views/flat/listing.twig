@@ -28,15 +28,15 @@
 
         <thead>
             <tr>
-                <th class="text-center">#</th>
-                <th class="text-center" data-field="block" data-sortable="true">{{ trans('global.flat.block') }}</th>
-                <th class="text-center" data-field="floor" data-sortable="true">{{ trans('global.flat.floor') }}</th>
+                <th class="text-center hidden-sm hidden-xs">#</th>
+                <th class="text-center hidden-sm hidden-xs" data-field="block" data-sortable="true">{{ trans('global.flat.block') }}</th>
+                <th class="text-center hidden-sm hidden-xs" data-field="floor" data-sortable="true">{{ trans('global.flat.floor') }}</th>
                 <th class="text-center" data-field="num" data-sortable="true">{{ trans('global.lbl.num') }}</th>
-                <th class="text-center" data-field="area" data-sortable="true">{{ trans('global.flat.area') }}</th>
+                <th class="text-center hidden-xs" data-field="area" data-sortable="true">{{ trans('global.flat.area') }}</th>
                 <th class="text-center" data-field="price" data-sortable="true">{{ trans('global.flat.price') }}</th>
-                <th class="text-center" data-field="view" data-sortable="true">{{ trans('global.flat.view') }}</th>
+                <th class="text-center hidden-sm hidden-xs" data-field="view" data-sortable="true">{{ trans('global.flat.view') }}</th>
                 <th class="text-center" data-field="contract" data-sortable="true">{{ trans_choice('global.tenant.title', 1) }}</th>
-                <th class="text-center">{{ trans('global.tenant.status') }}</th>
+                <th class="text-center visible-lg">{{ trans('global.tenant.status') }}</th>
                 <th class="text-center">{{ trans('global.contract.deadline') }}</th>
                 <th class="text-center">{{ trans_choice('global.lbl.actions', 2) }}</th>
             </tr>
@@ -47,15 +47,15 @@
             {% for flat in flats %}
 
                 <tr {% if flat.contract.id is empty and flat.next_contract.id is not empty %}class="warning"{% elseif flat.contract.id is empty %}class="danger"{% endif %}>
-                    <td>{{ loop.index }}</td>
-                    <td>{{ flat.block }}</td>
-                    <td>{{ flat.floor }}</td>
+                    <td class="hidden-sm hidden-xs">{{ loop.index }}</td>
+                    <td class="hidden-sm hidden-xs">{{ flat.block }}</td>
+                    <td class="hidden-sm hidden-xs">{{ flat.floor }}</td>
                     <td>{{ flat.name }}</td>
-                    <td>{{ flat.full_area }}</td>
+                    <td class="hidden-xs">{{ flat.full_area }}</td>
                     <td>{{ flat.full_price }}</td>
-                    <td>{{ flat.view | capitalize }}</td>
+                    <td class="hidden-sm hidden-xs">{{ flat.view | capitalize }}</td>
                     <td>{% if flat.contract.tenant.id is not empty %}<a href="{{ route('residence.tenant.show', [residence.id, flat.contract.tenant.id]) }}" title="{{ flat.contract.tenant.full_name }}">{{ flat.contract.tenant.full_name }}</a>{% endif %}</td>
-                    <td>{{ flat.contract.tenant.contract }}</td>
+                    <td class="hidden-sm visible-lg">{{ flat.contract.tenant.contract }}</td>
                     <td>
                         {% if flat.contract.id is not empty and flat.contract.end_date != '0000-00-00' %}<a href="{{ route('residence.contract.show', [residence.id, flat.contract.id]) }}" class="label label-danger" style="text-decoration: none">{{ trans('global.flat.end') }} {{ flat.contract.end_date | date('d/m/y') }}</a>{% endif %}
                         {% if flat.next_contract.id is not empty %}<a href="{{ route('residence.contract.show', [residence.id, flat.next_contract.id]) }}" class="label label-success" style="text-decoration: none">{{ trans('global.flat.relet') }} {{ flat.next_contract.start_date | date('d/m/y') }}</a>{% endif %}

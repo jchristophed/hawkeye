@@ -20,13 +20,13 @@
 
     <thead>
         <tr>
-            <th class="text-center">#</th>
+            <th class="text-center hidden-sm hidden-xs">#</th>
             <th class="text-center" data-field="tenant" data-sortable="true">{{ trans_choice('global.tenant.title', 1) }}</th>
             <th class="text-center" data-field="flat" data-sortable="true">{{ trans_choice('global.flat.title', 1) }}</th>
-            <th class="text-center" data-field="start_date" data-sortable="true">{{ trans('global.contract.start_date') }}</th>
-            <th class="text-center" data-field="end_date" data-sortable="true">{{ trans('global.contract.end_date') }}</th>
+            <th class="text-center hidden-sm hidden-xs" data-field="start_date" data-sortable="true">{{ trans('global.contract.start_date') }}</th>
+            <th class="text-center hidden-xs" data-field="end_date" data-sortable="true">{{ trans('global.contract.end_date') }}</th>
             <th class="text-center" data-field="price" data-sortable="true">{{ trans('global.flat.price') }}</th>
-            <th class="text-center" data-field="mode_of_payment" data-sortable="true">{{ trans('global.contract.mode_of_payment') }}</th>
+            <th class="text-center hidden-sm hidden-xs" data-field="mode_of_payment" data-sortable="true">{{ trans('global.contract.mode_of_payment') }}</th>
             <th class="text-center">{{ trans_choice('global.lbl.actions', 2) }}</th>
         </tr>
     </thead>
@@ -36,18 +36,18 @@
         {% for contract in contracts if contracts is not empty %}
 
             <tr {% if contract.option == 1 %}class="warning"{% endif %}>
-                <td>{{ loop.index }}</td>
+                <td class="hidden-sm hidden-xs">{{ loop.index }}</td>
                 <td>{% if contract.option == 1 %}<span class="glyphicon glyphicon-star"></span> {% endif %}{{ contract.tenant.full_name }}</td>
                 <td>{{ contract.flat.name }}</td>
-                <td>{% if contract.start_date != '0000-00-00' %}<span style="display:none">{{ contract.start_date | date ('Ymd') }}</span>{{ contract.start_date | date ('d/m/Y') }}{% endif %}</td>
-                <td>{% if contract.end_date != '0000-00-00' %}<span style="display:none">{{ contract.end_date | date ('Ymd') }}</span>{{ contract.end_date | date ('d/m/Y') }}{% endif %}</td>
+                <td class="hidden-sm hidden-xs">{% if contract.start_date != '0000-00-00' %}<span style="display:none">{{ contract.start_date | date ('Ymd') }}</span>{{ contract.start_date | date ('d/m/Y') }}{% endif %}</td>
+                <td class="hidden-xs">{% if contract.end_date != '0000-00-00' %}<span style="display:none">{{ contract.end_date | date ('Ymd') }}</span>{{ contract.end_date | date ('d/m/Y') }}{% endif %}</td>
                 <td>{{ contract.full_price }}</td>
-                <td>{{ contract.mode_of_payment }}</td>
+                <td class="hidden-sm hidden-xs">{{ contract.mode_of_payment }}</td>
                 <td>
                     <div class="btn-group pull-right">
                         <a href="{{ route('residence.contract.show', [residence.id, contract.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default">{{ trans('global.lbl.show') }}</a>
                         <a href="{{ route('residence.contract.edit', [residence.id, contract.id]) }}" title="{{ trans('global.lbl.edit') }}" class="btn btn-xs btn-default">{{ trans('global.lbl.edit') }}</a>
-                        <a href="javascript:void(0)" title="{{ trans('global.lbl.delete') }}" data-toggle="modal" data-target="#modal_destroy{{ contract.id }}" class="btn btn-xs btn-danger">{{ trans('global.lbl.delete') }}</a>
+                        <a href="javascript:void(0)" title="{{ trans('global.lbl.delete') }}" data-toggle="modal" data-target="#modal_destroy{{ contract.id }}" class="btn btn-xs btn-danger hidden-xs">{{ trans('global.lbl.delete') }}</a>
                     </div>
 
                     {# modal suppression #}

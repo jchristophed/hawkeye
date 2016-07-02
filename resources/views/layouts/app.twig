@@ -51,6 +51,12 @@
                 <div class="container">
 
                     <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
                         <a class="navbar-brand" href="/"><span class="label label-info">{{ trans('global.app.name') }}</span></a>
                     </div>
 
@@ -59,7 +65,7 @@
 
                             {% if residence.id is not empty %}
 
-                                <li><a href="{{ route('residence.index', residence.id) }}" title="{{ residence.name }}" class="navbar-brand">{{ residence.name }}</a></li>
+                                <li><a href="{{ route('residence.index', residence.id) }}" title="{{ residence.name }}">{{ residence.name }}</a></li>
 
                             {% endif %}
 
