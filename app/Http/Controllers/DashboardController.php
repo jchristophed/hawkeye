@@ -61,9 +61,12 @@ class DashboardController extends Controller
         $nbOldTenants = $this->tenantRepository->getNbByContract($residenceId, Lang::choice('global.tenant.old', 1));
         $nbPassengerTenants = $this->tenantRepository->getNbByContract($residenceId, Lang::choice('global.tenant.passenger', 1));
 
+        $tenantsTodayBirthday = $this->tenantRepository->indexTodayBirthday($residenceId);
+
         return view('dashboard.listing', [  'flats' => $freeFlats,
                                             'incomplete_contracts' => $incompleteContracts,
                                             'booked_contracts' => $bookedContracts,
+                                            'tenants_birthday' => $tenantsTodayBirthday,
                                             'residence' => $this->residence,
                                             'nb_free_flats' => $nbFreeFlats,
                                             'nb_occupied_flats' => $nbOccupiedFlats,

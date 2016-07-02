@@ -10,9 +10,10 @@ return [
     'lbl' => [
         'yes'                   => 'Oui',
         'no'                    => 'Non',
+        'today'                    => 'Aujourd\'hui',
         'edit'                  => 'Modifier',
         'delete'                => 'Supprimer',
-        'show'                  => 'Visualiser',
+        'show'                  => 'Détails',
         'close'                 => 'Fermer',
         'submit'                => 'Valider',
         'actions'               => 'Action|Actions',
@@ -81,6 +82,7 @@ return [
         'student'               => 'Etudiant|Etudiants',
         'trainee'               => 'Stagiaire|Stagiaires',
         'employe'               => 'Salarié|Salariés',
+        'celebrate'             => 'fête ses',
 
         'new'                   => 'Nouveau|Nouveaux',
         'old'                   => 'Renouvellement|Renouvellements',

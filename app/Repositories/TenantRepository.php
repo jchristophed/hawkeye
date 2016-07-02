@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Tenant;
+use Illuminate\Support\Facades\DB;
 
 class TenantRepository implements TenantRepositoryInterface {
 
@@ -44,6 +45,12 @@ class TenantRepository implements TenantRepositoryInterface {
     public function indexForNewContract($residenceId) {
 
         return $this->tenant->where('residence_id', $residenceId)->orderBy('lastname', 'asc')->get()->pluck('full_name', 'id');
+    }
+
+    // retourne tous les locataires dont c'est l'anniversaire aujourd'hui
+    public function indexTodayBirthday($residenceId) {
+
+        return $this->scopeOnResidenceOnly($residenceId)->where(DB::raw('MONTH(birth_date)'), '=', date('m'))->where(DB::raw('DAY(birth_date)'), '=', date('d'))->orderBy('lastname', 'asc')->get();
     }
 
     // COMPTEURS

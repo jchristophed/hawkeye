@@ -1,0 +1,11 @@
+.alert-event {
+    color: #ffffff;
+    background-color: #FF30C2;
+    border-color: #E52BAE;
+}
+.alert-event hr {
+    border-top-color: #E52BAE;
+}
+.alert-event .alert-link {
+    color: #ffffff;
+}

@@ -12,6 +12,21 @@
 {% block content %}
 
     <div class="row text-center" style="margin-bottom: 40px">
+
+        {% if tenants_birthday is not empty %}
+
+            <div class="col-sm-12">
+
+                {% for tenant in tenants_birthday %}
+
+                    <div class="alert alert-event text-left"><span class="glyphicon glyphicon-gift"></span> <strong>{{ tenant.full_name }}</strong> {{ trans('global.tenant.celebrate') }} {{ tenant.full_age }}  {{ trans('global.lbl.today') | lower }} !</div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
         <div class="col-sm-4">
             <h4>{{ trans_choice('global.flat.title', 2) }}</h4>
             <canvas id="myChart" height="200"></canvas>
@@ -42,10 +57,10 @@
 
                     <thead>
                         <tr>
-                            <th class="text-center">#</th>
+                            <th class="text-center hidden-sm">#</th>
                             <th class="text-center">{{ trans('global.lbl.num') }}</th>
                             <th class="text-center">{{ trans('global.flat.price') }}</th>
-                            <th class="text-center">{{ trans('global.flat.area') }}</th>
+                            <th class="text-center hidden-sm">{{ trans('global.flat.area') }}</th>
                             <th class="text-center"></th>
                         </tr>
                     </thead>
@@ -53,10 +68,10 @@
                     {% for flat in flats if flat.next_contract.id is empty %}
 
                         <tr>
-                            <td>{{ loop.index }}</td>
+                            <td class="hidden-sm">{{ loop.index }}</td>
                             <td>{{ flat.name }}</td>
                             <td>{{ flat.full_price }}</td>
-                            <td>{{ flat.full_area }}</td>
+                            <td class="hidden-sm">{{ flat.full_area }}</td>
                             <td>
                                 <a href="{{ route('residence.flat.show', [residence.id, flat.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default pull-right">{{ trans('global.lbl.show') }}</a>
                             </td>
@@ -83,9 +98,9 @@
 
                     <thead>
                     <tr>
-                        <th class="text-center">#</th>
+                        <th class="text-center hidden-sm">#</th>
                         <th class="text-center">{{ trans('global.lbl.num') }}</th>
-                        <th class="text-center">{{ trans('global.flat.price') }}</th>
+                        <th class="text-center hidden-sm">{{ trans('global.flat.price') }}</th>
                         <th class="text-center">{{ trans('global.contract.deadline') }}</th>
                         <th class="text-center"></th>
                     </tr>
@@ -94,9 +109,9 @@
                     {% for flat in flats if flat.next_contract.id is not empty %}
 
                         <tr>
-                            <td>{{ loop.index }}</td>
+                            <td class="hidden-sm">{{ loop.index }}</td>
                             <td>{{ flat.name }}</td>
-                            <td>{{ flat.full_price }}</td>
+                            <td class="hidden-sm">{{ flat.full_price }}</td>
                             <td>
                                 {% if flat.contract.id is not empty and flat.contract.end_date != '0000-00-00' %}<a href="{{ route('residence.contract.show', [residence.id, flat.contract.id]) }}" class="label label-danger" style="text-decoration: none">{{ trans('global.flat.end') }} {{ flat.contract.end_date | date('d/m/y') }}</a>{% endif %}
                                 {% if flat.next_contract.id is not empty %}<a href="{{ route('residence.contract.show', [residence.id, flat.next_contract.id]) }}" class="label label-success" style="text-decoration: none">{{ trans('global.flat.relet') }} {{ flat.next_contract.start_date | date('d/m/y') }}</a>{% endif %}
@@ -128,9 +143,9 @@
 
                     <thead>
                     <tr>
-                        <th class="text-center">#</th>
+                        <th class="text-center hidden-sm">#</th>
                         <th class="text-center">{{ trans_choice('global.flat.title', 1) }}</th>
-                        <th class="text-center">{{ trans_choice('global.tenant.title', 1) }}</th>
+                        <th class="text-center hidden-sm">{{ trans_choice('global.tenant.title', 1) }}</th>
                         <th class="text-center"></th>
                     </tr>
                     </thead>
@@ -138,9 +153,9 @@
                     {% for contract in booked_contracts if booked_contracts is not empty%}
 
                         <tr>
-                            <td>{{ loop.index }}</td>
+                            <td class="hidden-sm">{{ loop.index }}</td>
                             <td><a href="{{ route('residence.flat.show', [residence.id, contract.flat.id]) }}" title="{{ contract.flat.name }}">{{ contract.flat.name }}</a></td>
-                            <td><a href="{{ route('residence.tenant.show', [residence.id, contract.tenant.id]) }}" title="{{ contract.tenant.full_name }}">{{ contract.tenant.full_name }}</a></td>
+                            <td class="hidden-sm"><a href="{{ route('residence.tenant.show', [residence.id, contract.tenant.id]) }}" title="{{ contract.tenant.full_name }}">{{ contract.tenant.full_name }}</a></td>
                             <td>
                                 <a href="{{ route('residence.contract.show', [residence.id, contract.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default pull-right">{{ trans('global.lbl.show') }}</a>
                             </td>
@@ -163,9 +178,9 @@
 
                     <thead>
                     <tr>
-                        <th class="text-center">#</th>
+                        <th class="text-center hidden-sm">#</th>
                         <th class="text-center">{{ trans_choice('global.flat.title', 1) }}</th>
-                        <th class="text-center">{{ trans_choice('global.tenant.title', 1) }}</th>
+                        <th class="text-center hidden-sm">{{ trans_choice('global.tenant.title', 1) }}</th>
                         <th class="text-center"></th>
                     </tr>
                     </thead>
@@ -173,9 +188,9 @@
                     {% for contract in incomplete_contracts if incomplete_contracts is not empty%}
 
                         <tr>
-                            <td>{{ loop.index }}</td>
+                            <td class="hidden-sm">{{ loop.index }}</td>
                             <td><a href="{{ route('residence.flat.show', [residence.id, contract.flat.id]) }}" title="{{ contract.flat.name }}">{{ contract.flat.name }}</a></td>
-                            <td><a href="{{ route('residence.tenant.show', [residence.id, contract.tenant.id]) }}" title="{{ contract.tenant.full_name }}">{{ contract.tenant.full_name }}</a></td>
+                            <td class="hidden-sm"><a href="{{ route('residence.tenant.show', [residence.id, contract.tenant.id]) }}" title="{{ contract.tenant.full_name }}">{{ contract.tenant.full_name }}</a></td>
                             <td>
                                 <a href="{{ route('residence.contract.show', [residence.id, contract.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default pull-right">{{ trans('global.lbl.show') }}</a>
                             </td>
