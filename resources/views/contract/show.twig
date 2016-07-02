@@ -25,33 +25,38 @@
                 <table class="table">
 
                     <tr>
-                        <td>{{ trans('global.contract.start_date') }}</td>
+                        <td><span class="glyphicon glyphicon glyphicon-log-in"></span> {{ trans('global.contract.start_date') }}</td>
                         <td>{{ contract.start_date | date('d/m/Y') }}</td>
                     </tr>
 
                     <tr>
-                        <td>{{ trans('global.contract.end_date') }}</td>
+                        <td><span class="glyphicon glyphicon glyphicon-log-out"></span> {{ trans('global.contract.end_date') }}</td>
                         <td>{{ contract.end_date | date('d/m/Y') }}</td>
                     </tr>
 
                     <tr>
-                        <td>{{ trans('global.flat.price') }}</td>
+                        <td><span class="glyphicon glyphicon glyphicon-euro"></span> {{ trans('global.flat.price') }}</td>
                         <td>{{ contract.price }} €</td>
                     </tr>
 
                     <tr>
-                        <td>{{ trans('global.contract.application_fee') }}</td>
+                        <td><span class="glyphicon glyphicon glyphicon-book"></span> {{ trans('global.contract.application_fee') }}</td>
                         <td>{{ contract.application_fee }} €</td>
                     </tr>
 
                     <tr>
-                        <td>{{ trans('global.contract.deposit') }}</td>
+                        <td><span class="glyphicon glyphicon glyphicon-usd"></span> {{ trans('global.contract.deposit') }}</td>
                         <td>{{ contract.full_deposit }}</td>
                     </tr>
 
                     <tr>
-                        <td>{{ trans('global.contract.mode_of_payment') }}</td>
+                        <td><span class="glyphicon glyphicon glyphicon-credit-card"></span> {{ trans('global.contract.mode_of_payment') }}</td>
                         <td>{{ contract.mode_of_payment }}</td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="glyphicon glyphicon glyphicon-star"></span> {{ trans('global.contract.option') }}</td>
+                        <td>{% if contract.option == 0 %}{{ trans('global.lbl.no') }}{% else %}{{ trans('global.lbl.yes') }}{% endif %}</td>
                     </tr>
 
                 </table>

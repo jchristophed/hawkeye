@@ -79,11 +79,17 @@
     </div>
 
     {# Mode de paiement #}
-    <div class="form-group {% if errors.messages.mode_of_payment is not empty %}has-error{% endif %}">
+    <div class="form-group">
         {{ form_label('mode_of_payment', trans('global.contract.mode_of_payment')) }}
-        {% set values = {'check' : trans('global.contract.check'), 'credit_cart' : trans('global.contract.credit_card'), 'cash' : trans('global.contract.cash'), 'transfer' : trans('global.contract.transfer'), 'other' : trans('global.contract.other')} %}
+        {% set values = {'' : trans('global.lbl.not_specified'), 'check' : trans('global.contract.check'), 'credit_cart' : trans('global.contract.credit_card'), 'cash' : trans('global.contract.cash'), 'transfer' : trans('global.contract.transfer'), 'other' : trans('global.contract.other')} %}
         {{ form_select('mode_of_payment', values, contract.mode_of_payment, {'class': 'form-control'}) }}
-        {% if errors.messages.mode_of_payment is not empty %}<span class="label label-danger">{{ errors.messages.mode_of_payment | first }}</span>{% endif %}
+    </div>
+
+    {# Pré-réservation #}
+    <div class="form-group">
+        {{ form_label('option', trans('global.contract.option')) }}
+        {% set values = {0 : trans('global.lbl.no'), 1 : trans('global.lbl.yes')} %}
+        {{ form_select('option', values, null, {'class': 'form-control'}) }}
     </div>
 
     <div class="row">

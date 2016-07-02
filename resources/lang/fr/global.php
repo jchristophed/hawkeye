@@ -8,6 +8,8 @@ return [
     ],
 
     'lbl' => [
+        'yes'                   => 'Oui',
+        'no'                    => 'Non',
         'edit'                  => 'Modifier',
         'delete'                => 'Supprimer',
         'show'                  => 'Visualiser',
@@ -20,6 +22,7 @@ return [
         'add_suffix'            => 'a été créé',
         'edit_suffix'           => 'a été modifié',
         'delete_suffix'         => 'a été supprimé',
+        'not_specified'         => 'Non renseigné'
     ],
 
     'residence' => [
@@ -39,6 +42,8 @@ return [
         'empty_not_relet'       => 'Vide non reloué|Vides non reloués',
         'full'                  => 'Occupés',
         'all_full'              => 'Tous les logements sont occupés',
+        'no_relet'              => 'Aucun des logements vides n\'est reloué',
+        'no_empty'              => 'Il n\'y a aucun logement vide',
         'no_flat'               => 'Aucun logement',
         'relet'                 => 'Reloué le',
         'end'                   => 'Fin le',
@@ -93,17 +98,20 @@ return [
 
         'incomplete'            => 'Contrat incomplet|Contrats incomplets',
         'complete'              => 'Contrats complets',
+        'book'                  => 'Contrat avec option|Contrats avec option',
         'all_complete'          => 'Tous les contrats sont complets',
+        'no_booked'             => 'Aucun logement n\'est pré-réservé',
         'deadline'              => 'Échéance',
 
         'start_date'            => 'Date de début',
         'end_date'              => 'Date de fin',
         'mode_of_payment'       => 'Mode de paiement',
+        'option'                => 'Pré-réservation',
         'deposit'               => 'Dépôt de garantie',
         'application_fee'       => 'Frais de dossier',
         'empty'                 => 'Aucun contrat disponible',
         'general'               => 'Général',
-        'guarantors'            => 'Garant|Garants',
+        'guarantor'             => 'Garant|Garants',
         'locapass'              => 'Locapass',
         'check'                 => 'Chèque',
         'credit_card'           => 'Carte de crédit',

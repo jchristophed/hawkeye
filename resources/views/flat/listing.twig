@@ -62,8 +62,8 @@
                     </td>
                     <td>
                         <div class="btn-group pull-right">
-                            <a href="{{ route('residence.flat.show', [residence.id, flat.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default">{{ trans('global.lbl.show') }}</a>
-                            <a href="{{ route('residence.flat.edit', [residence.id, flat.id]) }}" title="{{ trans('global.lbl.edit') }}" class="btn btn-xs btn-default">{{ trans('global.lbl.edit') }}</a>
+                            {% if flat.contract.id is not empty %}<a href="{{ route('residence.contract.show', [residence.id, flat.contract.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default">{{ trans_choice('global.contract.title', 1) }}</a>{% endif %}
+                            <a href="{{ route('residence.flat.show', [residence.id, flat.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default">{{ trans_choice('global.flat.title', 1) }}</a>
                         </div>
                     </td>
                 </tr>

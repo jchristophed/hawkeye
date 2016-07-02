@@ -67,7 +67,7 @@
                     {% else %}
 
                         <tr>
-                            <td colspan="8" class="text-danger">{{ trans('global.flat.no_flat') }}</td>
+                            <td colspan="8" class="text-danger">{{ trans('global.flat.no_empty') }}</td>
                         </tr>
 
                     {% endfor %}
@@ -111,7 +111,7 @@
                     {% else %}
 
                         <tr>
-                            <td colspan="8" class="text-danger">{{ trans('global.flat.no_flat') }}</td>
+                            <td colspan="8" class="text-danger">{{ trans('global.flat.no_relet') }}</td>
                         </tr>
 
                     {% endfor %}
@@ -121,7 +121,43 @@
         </div>
 
         <div class="col-sm-4">
-            <div class="panel panel-info">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ trans_choice('global.contract.book', 2) }}</div>
+                <table class="table text-center">
+
+                    <thead>
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th class="text-center">{{ trans_choice('global.flat.title', 1) }}</th>
+                        <th class="text-center">{{ trans_choice('global.tenant.title', 1) }}</th>
+                        <th class="text-center"></th>
+                    </tr>
+                    </thead>
+
+                    {% for contract in booked_contracts if booked_contracts is not empty%}
+
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td><a href="{{ route('residence.flat.show', [residence.id, contract.flat.id]) }}" title="{{ contract.flat.name }}">{{ contract.flat.name }}</a></td>
+                            <td><a href="{{ route('residence.tenant.show', [residence.id, contract.tenant.id]) }}" title="{{ contract.tenant.full_name }}">{{ contract.tenant.full_name }}</a></td>
+                            <td>
+                                <a href="{{ route('residence.contract.show', [residence.id, contract.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default pull-right">{{ trans('global.lbl.show') }}</a>
+                            </td>
+                        </tr>
+
+                    {% else %}
+
+                        <tr>
+                            <td colspan="8" class="text-danger">{{ trans('global.contract.no_booked') }}</td>
+                        </tr>
+
+                    {% endfor %}
+
+                </table>
+            </div>
+
+            <div class="panel panel-default">
                 <div class="panel-heading">{{ trans_choice('global.contract.incomplete', 2) }}</div>
                 <table class="table text-center">
 
@@ -134,7 +170,7 @@
                     </tr>
                     </thead>
 
-                    {% for contract in contracts if contracts is not empty%}
+                    {% for contract in incomplete_contracts if incomplete_contracts is not empty%}
 
                         <tr>
                             <td>{{ loop.index }}</td>

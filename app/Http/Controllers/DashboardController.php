@@ -48,7 +48,8 @@ class DashboardController extends Controller
             $flat->setNextContract($this->contractRepository->getNextByFlat($residenceId, $flat));
         }
 
-        $contractsWithRequiredDocuments = $this->contractRepository->indexIncomplete($residenceId);
+        $incompleteContracts = $this->contractRepository->indexIncomplete($residenceId);
+        $bookedContracts = $this->contractRepository->indexBooked($residenceId);
 
         $nbFreeFlats = $this->flatRepository->getNbFreeFlats($residenceId);
         $nbOccupiedFlats = $this->flatRepository->getNbOccupiedFlats($residenceId);
@@ -61,7 +62,8 @@ class DashboardController extends Controller
         $nbPassengerTenants = $this->tenantRepository->getNbByContract($residenceId, Lang::choice('global.tenant.passenger', 1));
 
         return view('dashboard.listing', [  'flats' => $freeFlats,
-                                            'contracts' => $contractsWithRequiredDocuments,
+                                            'incomplete_contracts' => $incompleteContracts,
+                                            'booked_contracts' => $bookedContracts,
                                             'residence' => $this->residence,
                                             'nb_free_flats' => $nbFreeFlats,
                                             'nb_occupied_flats' => $nbOccupiedFlats,
