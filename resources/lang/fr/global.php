@@ -117,7 +117,7 @@ return [
         'locapass'              => 'Locapass',
         'check'                 => 'Chèque',
         'credit_card'           => 'Carte de crédit',
-        'cash'                  => 'Espèces',
+        'tpe'                   => 'TPE',
         'transfer'              => 'Virement',
         'other'                 => 'Autre',
 
