@@ -31,7 +31,7 @@
     {# Date de début #}
     <div class="form-group {% if errors.messages.start_date is not empty %}has-error{% endif %}">
         {{ form_label('start_date', trans('global.contract.start_date')) }}
-        {{ form_date('start_date', 'now' | date('Y-m-d'), {'class': 'form-control datetimepicker'}) }}
+        {{ form_date('start_date', 'now' | date('Y') ~ '-09-01', {'class': 'form-control datetimepicker'}) }}
         {% if errors.messages.start_date is not empty %}<span class="label label-danger">{{ errors.messages.start_date | first }}</span>{% endif %}
     </div>
 
@@ -47,7 +47,7 @@
         {{ form_label('price', trans('global.flat.price')) }}
 
         <div class="input-group">
-            {{ form_number('price', null, {'class': 'form-control'}) }}
+            {{ form_text('price', null, {'class': 'form-control'}) }}
             <div class="input-group-addon">{{ trans('global.lbl.euro') }}</div>
         </div>
 
@@ -59,7 +59,7 @@
         {{ form_label('application_fee', trans('global.contract.application_fee')) }}
 
         <div class="input-group">
-            {{ form_number('application_fee', null, {'class': 'form-control'}) }}
+            {{ form_text('application_fee', null, {'class': 'form-control'}) }}
             <div class="input-group-addon">{{ trans('global.lbl.euro') }}</div>
         </div>
 
@@ -71,7 +71,7 @@
         {{ form_label('deposit', trans('global.contract.deposit')) }}
 
         <div class="input-group">
-            {{ form_number('deposit', config_get('constants.default_deposit'), {'class': 'form-control'}) }}
+            {{ form_text('deposit', config_get('constants.default_deposit'), {'class': 'form-control'}) }}
             <div class="input-group-addon">{{ trans('global.lbl.euro') }}</div>
         </div>
 

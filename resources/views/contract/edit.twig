@@ -47,7 +47,7 @@
         {{ form_label('price', trans('global.flat.price')) }}
 
         <div class="input-group">
-            {{ form_number('price', null, {'class': 'form-control'}) }}
+            {{ form_text('price', null, {'class': 'form-control'}) }}
             <div class="input-group-addon">{{ trans('global.lbl.euro') }}</div>
         </div>
 
@@ -59,7 +59,7 @@
         {{ form_label('application_fee', trans('global.contract.application_fee')) }}
 
         <div class="input-group">
-            {{ form_number('application_fee', null, {'class': 'form-control'}) }}
+            {{ form_text('application_fee', null, {'class': 'form-control'}) }}
             <div class="input-group-addon">{{ trans('global.lbl.euro') }}</div>
         </div>
 
@@ -71,7 +71,7 @@
         {{ form_label('deposit', trans('global.contract.deposit')) }}
 
         <div class="input-group">
-            {{ form_number('deposit', null, {'class': 'form-control'}) }}
+            {{ form_text('deposit', null, {'class': 'form-control'}) }}
             <div class="input-group-addon">{{ trans('global.lbl.euro') }}</div>
         </div>
 

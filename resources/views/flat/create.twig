@@ -42,7 +42,7 @@
         {{ form_label('price', trans('global.flat.price')) }}
 
         <div class="input-group">
-            {{ form_number('price', null, {'class': 'form-control'}) }}
+            {{ form_text('price', null, {'class': 'form-control'}) }}
             <div class="input-group-addon">{{ trans('global.lbl.euro') }}</div>
         </div>
         {% if errors.messages.price is not empty %}<span class="label label-danger">{{ errors.messages.price | first }}</span>{% endif %}
@@ -54,7 +54,7 @@
         {{ form_label('area', trans('global.flat.area')) }}
 
         <div class="input-group">
-            {{ form_number('area', null, {'class': 'form-control'}) }}
+            {{ form_text('area', null, {'class': 'form-control'}) }}
             <div class="input-group-addon">{{ trans('global.lbl.m2') }}</div>
         </div>
         {% if errors.messages.area is not empty %}<span class="label label-danger">{{ errors.messages.area | first }}</span>{% endif %}
