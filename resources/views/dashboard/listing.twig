@@ -55,17 +55,21 @@
                 <div class="panel-heading">{{ trans_choice('global.flat.title', 2) }} {{ trans_choice('global.flat.empty_not_relet', 2) | lower }}</div>
                 <table class="table text-center">
 
-                    <thead>
-                        <tr>
-                            <th class="text-center hidden-sm">#</th>
-                            <th class="text-center">{{ trans('global.lbl.num') }}</th>
-                            <th class="text-center">{{ trans('global.flat.price') }}</th>
-                            <th class="text-center hidden-sm">{{ trans('global.flat.area') }}</th>
-                            <th class="text-center"></th>
-                        </tr>
-                    </thead>
-
                     {% for flat in flats if flat.next_contract.id is empty %}
+
+                        {% if loop.index == 1 %}
+
+                            <thead>
+                                <tr>
+                                    <th class="text-center hidden-sm">#</th>
+                                    <th class="text-center">{{ trans('global.lbl.num') }}</th>
+                                    <th class="text-center">{{ trans('global.flat.price') }}</th>
+                                    <th class="text-center hidden-sm">{{ trans('global.flat.area') }}</th>
+                                    <th class="text-center"></th>
+                                </tr>
+                            </thead>
+
+                        {% endif %}
 
                         <tr>
                             <td class="hidden-sm">{{ loop.index }}</td>
@@ -96,17 +100,21 @@
                 <div class="panel-heading">{{ trans_choice('global.flat.title', 2) }} {{ trans_choice('global.flat.empty_relet', 2) | lower }}</div>
                 <table class="table text-center">
 
-                    <thead>
-                    <tr>
-                        <th class="text-center hidden-sm">#</th>
-                        <th class="text-center">{{ trans('global.lbl.num') }}</th>
-                        <th class="text-center hidden-sm">{{ trans('global.flat.price') }}</th>
-                        <th class="text-center">{{ trans('global.contract.deadline') }}</th>
-                        <th class="text-center"></th>
-                    </tr>
-                    </thead>
-
                     {% for flat in flats if flat.next_contract.id is not empty %}
+
+                        {% if loop.index == 1 %}
+
+                            <thead>
+                                <tr>
+                                    <th class="text-center hidden-sm">#</th>
+                                    <th class="text-center">{{ trans('global.lbl.num') }}</th>
+                                    <th class="text-center hidden-sm">{{ trans('global.flat.price') }}</th>
+                                    <th class="text-center">{{ trans('global.contract.deadline') }}</th>
+                                    <th class="text-center"></th>
+                                </tr>
+                            </thead>
+
+                        {% endif %}
 
                         <tr>
                             <td class="hidden-sm">{{ loop.index }}</td>
@@ -141,14 +149,18 @@
                 <div class="panel-heading">{{ trans_choice('global.contract.book', 2) }}</div>
                 <table class="table text-center">
 
-                    <thead>
-                    <tr>
-                        <th class="text-center hidden-sm">#</th>
-                        <th class="text-center">{{ trans_choice('global.flat.title', 1) }}</th>
-                        <th class="text-center hidden-sm">{{ trans_choice('global.tenant.title', 1) }}</th>
-                        <th class="text-center"></th>
-                    </tr>
-                    </thead>
+                    {% if booked_contracts is not empty %}
+
+                        <thead>
+                            <tr>
+                                <th class="text-center hidden-sm">#</th>
+                                <th class="text-center">{{ trans_choice('global.flat.title', 1) }}</th>
+                                <th class="text-center hidden-sm">{{ trans_choice('global.tenant.title', 1) }}</th>
+                                <th class="text-center"></th>
+                            </tr>
+                        </thead>
+
+                    {% endif %}
 
                     {% for contract in booked_contracts if booked_contracts is not empty%}
 
@@ -176,14 +188,18 @@
                 <div class="panel-heading">{{ trans_choice('global.contract.incomplete', 2) }}</div>
                 <table class="table text-center">
 
-                    <thead>
-                    <tr>
-                        <th class="text-center hidden-sm">#</th>
-                        <th class="text-center">{{ trans_choice('global.flat.title', 1) }}</th>
-                        <th class="text-center hidden-sm">{{ trans_choice('global.tenant.title', 1) }}</th>
-                        <th class="text-center"></th>
-                    </tr>
-                    </thead>
+                    {% if incomplete_contracts is not empty  %}
+
+                        <thead>
+                            <tr>
+                                <th class="text-center hidden-sm">#</th>
+                                <th class="text-center">{{ trans_choice('global.flat.title', 1) }}</th>
+                                <th class="text-center hidden-sm">{{ trans_choice('global.tenant.title', 1) }}</th>
+                                <th class="text-center"></th>
+                            </tr>
+                        </thead>
+
+                    {% endif %}
 
                     {% for contract in incomplete_contracts if incomplete_contracts is not empty%}
 

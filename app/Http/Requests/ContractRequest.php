@@ -27,9 +27,9 @@ class ContractRequest extends Request
             'flat' => 'required|integer',
             'tenant' => 'required|integer',
             'start_date' => 'required|date',
-            'price' => 'integer',
-            'application_fee' => 'integer',
-            'deposit' => 'integer'
+            'price' => 'numeric',
+            'application_fee' => 'numeric',
+            'deposit' => 'numeric'
         ];
     }
 }
