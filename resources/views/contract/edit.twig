@@ -81,7 +81,7 @@
     {# Mode de paiement #}
     <div class="form-group">
         {{ form_label('mode_of_payment', trans('global.contract.mode_of_payment')) }}
-        {% set values = {'' : trans('global.lbl.not_specified'), 'check' : trans('global.contract.check'), 'credit_cart' : trans('global.contract.credit_card'), 'cash' : trans('global.contract.tpe'), 'transfer' : trans('global.contract.transfer'), 'other' : trans('global.contract.other')} %}
+        {% set values = {'' : trans('global.lbl.not_specified'), (trans('global.contract.check')) : trans('global.contract.check'), (trans('global.contract.credit_card')) : trans('global.contract.credit_card'), (trans('global.contract.tpe')) : trans('global.contract.tpe'), (trans('global.contract.transfer')) : trans('global.contract.transfer'), (trans('global.contract.other')) : trans('global.contract.other')} %}
         {{ form_select('mode_of_payment', values, contract.mode_of_payment, {'class': 'form-control'}) }}
     </div>
 
