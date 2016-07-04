@@ -61,6 +61,7 @@
 
                             <thead>
                                 <tr>
+                                    <th class="text-center hidden-sm">#</th>
                                     <th class="text-center">{{ trans('global.lbl.num') }}</th>
                                     <th class="text-center">{{ trans('global.flat.price') }}</th>
                                     <th class="text-center hidden-sm">{{ trans('global.flat.area') }}</th>
@@ -71,6 +72,7 @@
                         {% endif %}
 
                         <tr>
+                            <td class="hidden-sm">{{ loop.index }}</td>
                             <td>{{ flat.name }}</td>
                             <td>{{ flat.full_price }}</td>
                             <td class="hidden-sm">{{ flat.full_area }}</td>
@@ -104,6 +106,7 @@
 
                             <thead>
                                 <tr>
+                                    <th class="text-center hidden-sm">#</th>
                                     <th class="text-center">{{ trans('global.lbl.num') }}</th>
                                     <th class="text-center hidden-sm">{{ trans('global.flat.price') }}</th>
                                     <th class="text-center">{{ trans('global.contract.deadline') }}</th>
@@ -114,6 +117,7 @@
                         {% endif %}
 
                         <tr>
+                            <td class="hidden-sm">{{ loop.index }}</td>
                             <td>{{ flat.name }}</td>
                             <td class="hidden-sm">{{ flat.full_price }}</td>
                             <td>
@@ -149,6 +153,7 @@
 
                         <thead>
                             <tr>
+                                <th class="text-center hidden-sm">#</th>
                                 <th class="text-center">{{ trans_choice('global.flat.title', 1) }}</th>
                                 <th class="text-center hidden-sm">{{ trans_choice('global.tenant.title', 1) }}</th>
                                 <th class="text-center"></th>
@@ -160,6 +165,7 @@
                     {% for contract in booked_contracts if booked_contracts is not empty%}
 
                         <tr>
+                            <td class="hidden-sm">{{ loop.index }}</td>
                             <td><a href="{{ route('residence.flat.show', [residence.id, contract.flat.id]) }}" title="{{ contract.flat.name }}">{{ contract.flat.name }}</a></td>
                             <td class="hidden-sm"><a href="{{ route('residence.tenant.show', [residence.id, contract.tenant.id]) }}" title="{{ contract.tenant.full_name }}">{{ contract.tenant.full_name }}</a></td>
                             <td>
@@ -186,6 +192,7 @@
 
                         <thead>
                             <tr>
+                                <th class="text-center hidden-sm">#</th>
                                 <th class="text-center">{{ trans_choice('global.flat.title', 1) }}</th>
                                 <th class="text-center hidden-sm">{{ trans_choice('global.tenant.title', 1) }}</th>
                                 <th class="text-center"></th>
@@ -197,6 +204,7 @@
                     {% for contract in incomplete_contracts if incomplete_contracts is not empty%}
 
                         <tr>
+                            <td class="hidden-sm">{{ loop.index }}</td>
                             <td><a href="{{ route('residence.flat.show', [residence.id, contract.flat.id]) }}" title="{{ contract.flat.name }}">{{ contract.flat.name }}</a></td>
                             <td class="hidden-sm"><a href="{{ route('residence.tenant.show', [residence.id, contract.tenant.id]) }}" title="{{ contract.tenant.full_name }}">{{ contract.tenant.full_name }}</a></td>
                             <td>
