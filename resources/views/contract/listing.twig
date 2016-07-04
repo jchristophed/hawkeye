@@ -20,7 +20,6 @@
 
     <thead>
         <tr>
-            <th class="text-center hidden-sm hidden-xs">#</th>
             <th class="text-center" data-field="tenant" data-sortable="true">{{ trans_choice('global.tenant.title', 1) }}</th>
             <th class="text-center" data-field="flat" data-sortable="true">{{ trans_choice('global.flat.title', 1) }}</th>
             <th class="text-center hidden-sm hidden-xs" data-field="start_date" data-sortable="true">{{ trans('global.contract.start_date') }}</th>
@@ -36,7 +35,6 @@
         {% for contract in contracts if contracts is not empty %}
 
             <tr {% if contract.option == 1 %}class="warning"{% endif %}>
-                <td class="hidden-sm hidden-xs">{{ loop.index }}</td>
                 <td>{% if contract.option == 1 %}<span class="glyphicon glyphicon-star"></span> {% endif %}{{ contract.tenant.full_name }}</td>
                 <td>{{ contract.flat.name }}</td>
                 <td class="hidden-sm hidden-xs">{% if contract.start_date != '0000-00-00' %}<span style="display:none">{{ contract.start_date | date ('Ymd') }}</span>{{ contract.start_date | date ('d/m/Y') }}{% endif %}</td>

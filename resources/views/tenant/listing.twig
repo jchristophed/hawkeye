@@ -27,7 +27,6 @@
            data-show-footer="false">
         <thead>
             <tr>
-                <th class="text-center hidden-sm hidden-xs">#</th>
                 <th class="text-center" data-field="lastname" data-sortable="true">{{ trans('global.tenant.lastname') }}</th>
                 <th class="text-center" data-field="firtsname" data-sortable="true">{{ trans('global.tenant.firstname') }}</th>
                 <th class="text-center hidden-sm hidden-xs">{{ trans('global.tenant.birth_date') }}</th>
@@ -43,7 +42,6 @@
             {% for tenant in tenants %}
 
                 <tr>
-                    <td class="hidden-sm hidden-xs">{{ loop.index }}</td>
                     <td>{% if tenant.birth_date | date('m-d') == 'now' | date('m-d') %}<span class="glyphicon glyphicon-gift"></span> {% endif %}{{ tenant.lastname }}</td>
                     <td>{{ tenant.firstname }}</td>
                     <td class="hidden-sm hidden-xs">{{ tenant.birth_date | date('d/m/Y') }}</td>

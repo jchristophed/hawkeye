@@ -28,7 +28,6 @@
 
         <thead>
             <tr>
-                <th class="text-center hidden-sm hidden-xs">#</th>
                 <th class="text-center hidden-sm hidden-xs" data-field="block" data-sortable="true">{{ trans('global.flat.block') }}</th>
                 <th class="text-center hidden-sm hidden-xs" data-field="floor" data-sortable="true">{{ trans('global.flat.floor') }}</th>
                 <th class="text-center" data-field="num" data-sortable="true">{{ trans('global.lbl.num') }}</th>
@@ -47,7 +46,6 @@
             {% for flat in flats %}
 
                 <tr {% if flat.contract.id is empty and flat.next_contract.id is empty %}class="danger"{% endif %}>
-                    <td class="hidden-sm hidden-xs">{{ loop.index }}</td>
                     <td class="hidden-sm hidden-xs">{{ flat.block }}</td>
                     <td class="hidden-sm hidden-xs">{{ flat.floor }}</td>
                     <td>{{ flat.name }}</td>
