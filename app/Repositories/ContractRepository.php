@@ -38,6 +38,17 @@ class ContractRepository implements ContractRepositoryInterface {
                         });
     }
 
+    // retourne uniquement les contrats en cours et futurs
+    private function scopeRunningAndFutureOnResidenceOnly($residenceId) {
+
+        return $this    ->scopeOnResidenceOnly($residenceId)
+                        ->where(function ($query2) {
+                            $query2
+                                ->where('end_date', '>=', date('Y-m-d'))
+                                ->orWhere('end_date', '=', '0000-00-00');
+                        });
+    }
+
     // LISTINGS
     // --------------------
 
@@ -51,6 +62,12 @@ class ContractRepository implements ContractRepositoryInterface {
     public function indexRunning($residenceId) {
 
         return $this->scopeRunningOnResidenceOnly($residenceId)->get();
+    }
+
+    // retourne tous les contrats en cours et futurs d'une résidence
+    public function indexRunningAndFutureFlatId($residenceId) {
+
+        return $this->scopeRunningAndFutureOnResidenceOnly($residenceId)->select('contract.flat_id')->get();
     }
 
     // retourne tous les id des appartements ayant un contrat en cours

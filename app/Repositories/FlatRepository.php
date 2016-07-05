@@ -48,6 +48,15 @@ class FlatRepository implements FlatRepositoryInterface {
                 ->get();
     }
 
+    // retourne la liste des logements inoccupés maintenant et a l'avenir
+    public function indexUnoccupiedNowAndFuture($residenceId) {
+
+        return  $this->scopeOnResidenceOnly($residenceId)
+            ->select('flat.id', 'flat.block', 'flat.floor', 'flat.name', 'flat.price', 'flat.area', 'flat.view')
+            ->whereNotIn('flat.id', $this->contractRepository->indexRunningAndFutureFlatId($residenceId))
+            ->get();
+    }
+
     // COMPTEURS
     // --------------------
 
@@ -59,7 +68,7 @@ class FlatRepository implements FlatRepositoryInterface {
     // retourne le nombre de logements inoccupés
     public function getNbFreeFlats($residenceId) {
 
-        return $this->indexUnoccupied($residenceId)->count();
+        return $this->indexUnoccupiedNowAndFuture($residenceId)->count();
     }
 
     // retourne le nombre de logements occupés

@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\Models\Tenant;
 use Illuminate\Support\Facades\DB;
 
+use Carbon\Carbon;
+
 class TenantRepository implements TenantRepositoryInterface {
 
     protected $tenant;
@@ -50,7 +52,42 @@ class TenantRepository implements TenantRepositoryInterface {
     // retourne tous les locataires dont c'est l'anniversaire aujourd'hui
     public function indexTodayBirthday($residenceId) {
 
-        return $this->scopeOnResidenceOnly($residenceId)->where(DB::raw('MONTH(birth_date)'), '=', date('m'))->where(DB::raw('DAY(birth_date)'), '=', date('d'))->orderBy('lastname', 'asc')->get();
+        return $this->scopeOnResidenceOnly($residenceId)    ->where(function ($query2) {
+                                                                $query2
+                                                                    ->where(DB::raw('MONTH(birth_date)'), '=', Carbon::now()->month)
+                                                                    ->where(DB::raw('DAY(birth_date)'), '=', Carbon::now()->day);
+                                                            })
+                                                            ->orWhere(function ($query2) {
+                                                                $query2
+                                                                    ->where(DB::raw('MONTH(birth_date)'), '=', Carbon::now()->addDay()->month)
+                                                                    ->where(DB::raw('DAY(birth_date)'), '=', Carbon::now()->addDay()->day);
+                                                            })
+                                                            ->orWhere(function ($query2) {
+                                                                $query2
+                                                                    ->where(DB::raw('MONTH(birth_date)'), '=', Carbon::now()->addDays(2)->month)
+                                                                    ->where(DB::raw('DAY(birth_date)'), '=', Carbon::now()->addDays(2)->day);
+                                                            })
+                                                            ->orWhere(function ($query2) {
+                                                                $query2
+                                                                    ->where(DB::raw('MONTH(birth_date)'), '=', Carbon::now()->addDays(3)->month)
+                                                                    ->where(DB::raw('DAY(birth_date)'), '=', Carbon::now()->addDays(3)->day);
+                                                            })
+                                                            ->orWhere(function ($query2) {
+                                                                $query2
+                                                                    ->where(DB::raw('MONTH(birth_date)'), '=', Carbon::now()->addDays(4)->month)
+                                                                    ->where(DB::raw('DAY(birth_date)'), '=', Carbon::now()->addDays(4)->day);
+                                                            })
+                                                            ->orWhere(function ($query2) {
+                                                                $query2
+                                                                    ->where(DB::raw('MONTH(birth_date)'), '=', Carbon::now()->addDays(5)->month)
+                                                                    ->where(DB::raw('DAY(birth_date)'), '=', Carbon::now()->addDays(5)->day);
+                                                            })
+                                                            ->orWhere(function ($query2) {
+                                                                $query2
+                                                                    ->where(DB::raw('MONTH(birth_date)'), '=', Carbon::now()->addDays(6)->month)
+                                                                    ->where(DB::raw('DAY(birth_date)'), '=', Carbon::now()->addDays(6)->day);
+                                                            })
+                                                            ->orderBy('birth_date', 'asc')->get();
     }
 
     // COMPTEURS

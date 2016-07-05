@@ -10,7 +10,8 @@ return [
     'lbl' => [
         'yes'                   => 'Oui',
         'no'                    => 'Non',
-        'today'                    => 'Aujourd\'hui',
+        'the'                   => 'le',
+        'today'                 => 'Aujourd\'hui',
         'edit'                  => 'Modifier',
         'delete'                => 'Supprimer',
         'show'                  => 'Détails',
@@ -23,7 +24,8 @@ return [
         'add_suffix'            => 'a été créé',
         'edit_suffix'           => 'a été modifié',
         'delete_suffix'         => 'a été supprimé',
-        'not_specified'         => 'Non renseigné'
+        'not_specified'         => 'Non renseigné',
+        'birthday'              => 'Anniversaires de la semaine'
     ],
 
     'residence' => [
@@ -82,7 +84,6 @@ return [
         'student'               => 'Etudiant|Etudiants',
         'trainee'               => 'Stagiaire|Stagiaires',
         'employe'               => 'Salarié|Salariés',
-        'celebrate'             => 'fête ses',
 
         'new'                   => 'Nouveau|Nouveaux',
         'old'                   => 'Renouvellement|Renouvellements',

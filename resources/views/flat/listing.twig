@@ -50,7 +50,7 @@
                     <td class="hidden-sm hidden-xs">{{ flat.floor }}</td>
                     <td>{{ flat.name }}</td>
                     <td class="hidden-xs">{{ flat.full_area }}</td>
-                    <td>{{ flat.full_price }}</td>
+                    <td>{{ flat.full_price | number_format(0, '.', ' ')}}</td>
                     <td class="hidden-sm hidden-xs">{{ flat.view | capitalize }}</td>
                     <td>
                         {% if flat.contract.tenant.id is not empty %}<a href="{{ route('residence.tenant.show', [residence.id, flat.contract.tenant.id]) }}" title="{{ flat.contract.tenant.full_name }}">{{ flat.contract.tenant.full_name }}</a>

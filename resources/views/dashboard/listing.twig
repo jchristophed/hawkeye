@@ -13,19 +13,7 @@
 
     <div class="row text-center" style="margin-bottom: 40px">
 
-        {% if tenants_birthday is not empty %}
 
-            <div class="col-sm-12">
-
-                {% for tenant in tenants_birthday %}
-
-                    <div class="alert alert-event text-left"><span class="glyphicon glyphicon-gift"></span> <strong>{{ tenant.full_name }}</strong> {{ trans('global.tenant.celebrate') }} {{ tenant.full_age }}  {{ trans('global.lbl.today') | lower }} !</div>
-
-                {% endfor %}
-
-            </div>
-
-        {% endif %}
 
         <div class="col-sm-4">
             <h4>{{ trans_choice('global.flat.title', 2) }}</h4>
@@ -46,7 +34,25 @@
         </div>
 
     </div>
-    <div class="clearfix"></div>
+
+    {% if tenants_birthday is not empty %}
+        <div class="row">
+            <div class="col-sm-12">
+
+                <h4 class="title-event">{{ trans('global.lbl.birthday') }}</h4>
+                <div class="alert alert-event text-left">
+
+                    {% for tenant in tenants_birthday %}
+
+                        <span class="glyphicon glyphicon-gift"></span> {{ tenant.full_name }} <small><em>({{ tenant.full_age }} {{ trans('global.lbl.the') }} {{ tenant.birth_date | date('d/m') }})</em></small>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+        </div>
+    {% endif %}
 
     <div class="row">
 
@@ -74,7 +80,7 @@
                         <tr>
                             <td class="hidden-sm">{{ loop.index }}</td>
                             <td>{{ flat.name }}</td>
-                            <td>{{ flat.full_price }}</td>
+                            <td>{{ flat.full_price | number_format(0, '.', ' ')}}</td>
                             <td class="hidden-sm">{{ flat.full_area }}</td>
                             <td>
                                 <a href="{{ route('residence.flat.show', [residence.id, flat.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default pull-right">{{ trans('global.lbl.show') }}</a>
