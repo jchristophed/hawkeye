@@ -68,6 +68,12 @@ class FlatRepository implements FlatRepositoryInterface {
     // retourne le nombre de logements inoccupés
     public function getNbFreeFlats($residenceId) {
 
+        return $this->indexUnoccupied($residenceId)->count();
+    }
+
+    // retourne le nombre de logements inoccupés
+    public function getNbFreeFlatsAndFuture($residenceId) {
+
         return $this->indexUnoccupiedNowAndFuture($residenceId)->count();
     }
 

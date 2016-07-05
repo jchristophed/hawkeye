@@ -51,7 +51,7 @@ class DashboardController extends Controller
         $incompleteContracts = $this->contractRepository->indexIncomplete($residenceId);
         $bookedContracts = $this->contractRepository->indexBooked($residenceId);
 
-        $nbFreeFlats = $this->flatRepository->getNbFreeFlats($residenceId);
+        $nbFreeFlats = $this->flatRepository->getNbFreeFlatsAndFuture($residenceId);
         $nbOccupiedFlats = $this->flatRepository->getNbOccupiedFlats($residenceId);
 
         $nbContractsWithRequiredDocuments = $this->contractRepository->getNbIncompleteContracts($residenceId);
