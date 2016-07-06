@@ -59,6 +59,8 @@
         <div class="col-sm-4">
             <div class="panel panel-danger">
                 <div class="panel-heading">{{ trans_choice('global.flat.title', 2) }} {{ trans_choice('global.flat.empty_not_relet', 2) | lower }}</div>
+
+                {# logements vides non reloues #}
                 <table class="table text-center">
 
                     {% for flat in flats if flat.next_contract.id is empty %}
@@ -92,7 +94,7 @@
                     {% else %}
 
                         <tr>
-                            <td colspan="8" class="text-danger">{{ trans('global.flat.no_empty') }}</td>
+                            <td colspan="8" class="text-success">{{ trans('global.flat.no_empty') }}</td>
                         </tr>
 
                     {% endfor %}
@@ -102,6 +104,8 @@
 
             <div class="panel panel-danger">
                 <div class="panel-heading">{{ trans_choice('global.flat.title', 2) }} {{ trans_choice('global.flat.full_not_relet', 2) | lower }}</div>
+
+                {# logements occupés avec préavis non reloués #}
                 <table class="table text-center">
 
                     {% for flat in flats_warning_not_relet if flat.next_contract.id is empty %}
@@ -133,7 +137,7 @@
                     {% else %}
 
                         <tr>
-                            <td colspan="8" class="text-danger">{{ trans('global.flat.no_empty') }}</td>
+                            <td colspan="8" class="text-success">{{ trans('global.flat.no_warning_not_relet') }}</td>
                         </tr>
 
                     {% endfor %}
@@ -146,6 +150,8 @@
         <div class="col-sm-4">
             <div class="panel panel-warning">
                 <div class="panel-heading">{{ trans_choice('global.flat.title', 2) }} {{ trans_choice('global.flat.empty_relet', 2) | lower }}</div>
+
+                {# logements vides reloués #}
                 <table class="table text-center">
 
                     {% for flat in flats if flat.next_contract.id is not empty %}
@@ -194,6 +200,8 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">{{ trans_choice('global.contract.book', 2) }}</div>
+
+                {# contrats pré-réservés #}
                 <table class="table text-center">
 
                     {% if booked_contracts is not empty %}
@@ -223,7 +231,7 @@
                     {% else %}
 
                         <tr>
-                            <td colspan="8" class="text-danger">{{ trans('global.contract.no_booked') }}</td>
+                            <td colspan="8" class="text-success">{{ trans('global.contract.no_booked') }}</td>
                         </tr>
 
                     {% endfor %}
@@ -233,6 +241,8 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">{{ trans_choice('global.contract.incomplete', 2) }}</div>
+
+                {# contrats incomplets #}
                 <table class="table text-center">
 
                     {% if incomplete_contracts is not empty  %}
@@ -262,7 +272,7 @@
                     {% else %}
 
                         <tr>
-                            <td colspan="8" class="text-danger">{{ trans('global.contract.all_complete') }}</td>
+                            <td colspan="8" class="text-success">{{ trans('global.contract.all_complete') }}</td>
                         </tr>
 
                     {% endfor %}
