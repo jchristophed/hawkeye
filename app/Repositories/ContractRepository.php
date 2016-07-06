@@ -26,7 +26,7 @@ class ContractRepository implements ContractRepositoryInterface {
                                 ->where('flat.residence_id', $residenceId);
     }
 
-    // retourne uniquement les contrats en cours
+    // retourne uniquement les contrats en cours d'une résidence
     private function scopeRunningOnResidenceOnly($residenceId) {
 
         return $this    ->scopeOnResidenceOnly($residenceId)
@@ -63,8 +63,8 @@ class ContractRepository implements ContractRepositoryInterface {
                         ->get();
     }
 
-    // retourne tous les id des appartements ayant un contrat futur
-    public function indexFutureFlatId($residenceId) {
+    // retourne tous les id des appartements reloués
+    public function indexReletFlatId($residenceId) {
 
         return $this    ->scopeOnResidenceOnly($residenceId)
                         ->where('start_date', '>', date('Y-m-d'))
@@ -72,8 +72,8 @@ class ContractRepository implements ContractRepositoryInterface {
                         ->get();
     }
 
-    // retourne tous les id des appartements ayant un contrat en cours ou futur
-    public function indexRunningAndFutureFlatId($residenceId) {
+    // retourne tous les id des appartements occupés et reloués
+    public function indexRunningReletFlatId($residenceId) {
 
         return $this    ->scopeOnResidenceOnly($residenceId)
                         ->where(function ($query2) {
@@ -175,6 +175,9 @@ class ContractRepository implements ContractRepositoryInterface {
                         ->orderBy('start_date', 'asc')
                         ->first();
     }
+
+    // GESTION
+    // --------------------
 
     // hydrate un contrat depuis un formulaire
     private function save(Contract $contract, Array $inputs)

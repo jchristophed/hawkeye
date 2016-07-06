@@ -40,15 +40,24 @@ class DashboardController extends Controller
      */
     public function index($residenceId)
     {
+        $nbOccupiedFlats = $this->flatRepository->getNbOccupiedFlats($residenceId);
 
-        $freeFlats = $this->flatRepository->indexUnoccupied($residenceId);
+        // logements vides et non reloués
+        $freeFlatsNotRelet = $this->flatRepository->indexFreeNotRelet($residenceId);
 
-        foreach ($freeFlats as $flat) {
+        foreach ($freeFlatsNotRelet as $flat) {
+            $flat->setContract($this->contractRepository->getActiveByFlat($residenceId, $flat));
+        }
 
+        // logements vides et reloués
+        $freeFlatsRelet = $this->flatRepository->indexFreeRelet($residenceId);
+
+        foreach ($freeFlatsRelet as $flat) {
             $flat->setContract($this->contractRepository->getActiveByFlat($residenceId, $flat));
             $flat->setNextContract($this->contractRepository->getNextByFlat($residenceId, $flat));
         }
 
+        // logements avec préavis et non reloués
         $warningFlatsNotRelet = $this->flatRepository->indexWarningNotRelet($residenceId);
 
         foreach ($warningFlatsNotRelet as $flat) {
@@ -56,14 +65,9 @@ class DashboardController extends Controller
             $flat->setContract($this->contractRepository->getActiveByFlat($residenceId, $flat));
         }
 
+        $nbCompleteContracts = $this->contractRepository->getNbCompleteContracts($residenceId);
         $incompleteContracts = $this->contractRepository->indexIncomplete($residenceId);
         $bookedContracts = $this->contractRepository->indexBooked($residenceId);
-
-        $nbFreeFlats = $this->flatRepository->getNbFreeFlatsAndFuture($residenceId);
-        $nbOccupiedFlats = $this->flatRepository->getNbOccupiedFlats($residenceId);
-
-        $nbContractsWithRequiredDocuments = $this->contractRepository->getNbIncompleteContracts($residenceId);
-        $nbContractsWithoutRequiredDocuments = $this->contractRepository->getNbCompleteContracts($residenceId);
 
         $nbNewTenants = $this->tenantRepository->getNbByContract($residenceId, Lang::choice('global.tenant.new', 1));
         $nbOldTenants = $this->tenantRepository->getNbByContract($residenceId, Lang::choice('global.tenant.old', 1));
@@ -71,16 +75,15 @@ class DashboardController extends Controller
 
         $tenantsTodayBirthday = $this->tenantRepository->indexTodayBirthday($residenceId);
 
-        return view('dashboard.listing', [  'flats' => $freeFlats,
-                                            'flats_warning_not_relet' => $warningFlatsNotRelet,
+        return view('dashboard.listing', [  'free_flats_not_relet' => $freeFlatsNotRelet,
+                                            'free_flats_relet' => $freeFlatsRelet,
+                                            'warning_flats_not_relet' => $warningFlatsNotRelet,
                                             'incomplete_contracts' => $incompleteContracts,
                                             'booked_contracts' => $bookedContracts,
                                             'tenants_birthday' => $tenantsTodayBirthday,
                                             'residence' => $this->residence,
-                                            'nb_free_flats' => $nbFreeFlats,
                                             'nb_occupied_flats' => $nbOccupiedFlats,
-                                            'nb_contracts_with_required_documents' => $nbContractsWithRequiredDocuments,
-                                            'nb_contracts_without_required_documents' => $nbContractsWithoutRequiredDocuments,
+                                            'nb_complete_contracts' => $nbCompleteContracts,
                                             'nb_new_tenants' => $nbNewTenants,
                                             'nb_old_tenants' => $nbOldTenants,
                                             'nb_passenger_tenants' => $nbPassengerTenants

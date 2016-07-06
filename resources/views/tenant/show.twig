@@ -12,7 +12,7 @@
     {# si c'est son anniversaire #}
     {% if tenant.birth_date | date('m-d') == 'now' | date('m-d') %}
 
-        <div class="alert alert-success">
+        <div class="alert alert-event">
             <span class="glyphicon glyphicon-gift"></span> {{ trans('global.tenant.birth_day') }}
         </div>
 

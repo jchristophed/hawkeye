@@ -124,10 +124,8 @@ class TenantRepository implements TenantRepositoryInterface {
         $tenant->save();
     }
 
-    public function getPaginate($n, $residenceId)
-    {
-        return $this->tenant->where('residence_id', $residenceId)->orderBy('lastname', 'asc')->paginate($n);
-    }
+    // GESTION
+    // --------------------
 
     public function store(Array $inputs)
     {

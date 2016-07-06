@@ -17,19 +17,19 @@
 
         <div class="col-sm-4">
             <h4>{{ trans_choice('global.flat.title', 2) }}</h4>
-            <canvas id="myChart" height="200"></canvas>
+            <canvas id="flat_chart" height="200"></canvas>
 
         </div>
 
         <div class="col-sm-4">
             <h4>{{ trans_choice('global.tenant.title', 2) }}</h4>
-            <canvas id="myChart3" height="200"></canvas>
+            <canvas id="tenant_chart" height="200"></canvas>
 
         </div>
 
         <div class="col-sm-4">
             <h4>{{ trans_choice('global.contract.title', 2) }}</h4>
-            <canvas id="myChart2" height="200"></canvas>
+            <canvas id="contract_chart" height="200"></canvas>
 
         </div>
 
@@ -44,7 +44,7 @@
 
                     {% for tenant in tenants_birthday %}
 
-                        <span class="glyphicon glyphicon-gift"></span> {{ tenant.full_name }} <small><em>({{ tenant.full_age }} {{ trans('global.lbl.the') }} {{ tenant.birth_date | date('d/m') }})</em></small>
+                        <span class="glyphicon glyphicon-gift"></span> <a href="{{ route('residence.tenant.show', [residence.id, tenant.id]) }}" title="{{ tenant.full_name }}" style="color: #fff">{{ tenant.full_name }}</a> <small><em>({{ tenant.full_age }} {{ trans('global.lbl.the') }} {{ tenant.birth_date | date('d/m') }})</em></small>
 
                     {% endfor %}
 
@@ -63,21 +63,21 @@
                 {# logements vides non reloues #}
                 <table class="table text-center">
 
-                    {% for flat in flats if flat.next_contract.id is empty %}
+                    {% if free_flats_not_relet is not empty %}
 
-                        {% if loop.index == 1 %}
+                        <thead>
+                            <tr>
+                                <th class="text-center hidden-sm">#</th>
+                                <th class="text-center">{{ trans('global.lbl.num') }}</th>
+                                <th class="text-center">{{ trans('global.flat.price') }}</th>
+                                <th class="text-center hidden-sm">{{ trans('global.flat.area') }}</th>
+                                <th class="text-center"></th>
+                            </tr>
+                        </thead>
 
-                            <thead>
-                                <tr>
-                                    <th class="text-center hidden-sm">#</th>
-                                    <th class="text-center">{{ trans('global.lbl.num') }}</th>
-                                    <th class="text-center">{{ trans('global.flat.price') }}</th>
-                                    <th class="text-center hidden-sm">{{ trans('global.flat.area') }}</th>
-                                    <th class="text-center"></th>
-                                </tr>
-                            </thead>
+                    {% endif %}
 
-                        {% endif %}
+                    {% for flat in free_flats_not_relet %}
 
                         <tr>
                             <td class="hidden-sm">{{ loop.index }}</td>
@@ -88,8 +88,6 @@
                                 <a href="{{ route('residence.flat.show', [residence.id, flat.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default pull-right">{{ trans('global.lbl.show') }}</a>
                             </td>
                         </tr>
-
-                        {% set nb_empty_flats_not_relet = loop.index %}
 
                     {% else %}
 
@@ -108,11 +106,9 @@
                 {# logements occupés avec préavis non reloués #}
                 <table class="table text-center">
 
-                    {% for flat in flats_warning_not_relet if flat.next_contract.id is empty %}
+                    {% if warning_flats_not_relet is not empty %}
 
-                        {% if loop.index == 1 %}
-
-                            <thead>
+                        <thead>
                             <tr>
                                 <th class="text-center hidden-sm">#</th>
                                 <th class="text-center">{{ trans('global.lbl.num') }}</th>
@@ -120,9 +116,11 @@
                                 <th class="text-center hidden-sm">{{ trans('global.contract.deadline') }}</th>
                                 <th class="text-center"></th>
                             </tr>
-                            </thead>
+                        </thead>
 
-                        {% endif %}
+                    {% endif %}
+
+                    {% for flat in warning_flats_not_relet %}
 
                         <tr>
                             <td class="hidden-sm">{{ loop.index }}</td>
@@ -154,21 +152,21 @@
                 {# logements vides reloués #}
                 <table class="table text-center">
 
-                    {% for flat in flats if flat.next_contract.id is not empty %}
+                    {% if free_flats_relet is not empty %}
 
-                        {% if loop.index == 1 %}
+                        <thead>
+                            <tr>
+                                <th class="text-center hidden-sm">#</th>
+                                <th class="text-center">{{ trans('global.lbl.num') }}</th>
+                                <th class="text-center hidden-sm">{{ trans('global.flat.price') }}</th>
+                                <th class="text-center">{{ trans('global.contract.deadline') }}</th>
+                                <th class="text-center"></th>
+                            </tr>
+                        </thead>
 
-                            <thead>
-                                <tr>
-                                    <th class="text-center hidden-sm">#</th>
-                                    <th class="text-center">{{ trans('global.lbl.num') }}</th>
-                                    <th class="text-center hidden-sm">{{ trans('global.flat.price') }}</th>
-                                    <th class="text-center">{{ trans('global.contract.deadline') }}</th>
-                                    <th class="text-center"></th>
-                                </tr>
-                            </thead>
+                    {% endif %}
 
-                        {% endif %}
+                    {% for flat in free_flats_relet %}
 
                         <tr>
                             <td class="hidden-sm">{{ loop.index }}</td>
@@ -181,8 +179,6 @@
                                 <a href="{{ route('residence.flat.show', [residence.id, flat.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default pull-right">{{ trans('global.lbl.show') }}</a>
                             </td>
                         </tr>
-
-                        {% set nb_empty_flats_relet = loop.index %}
 
                     {% else %}
 
@@ -282,9 +278,9 @@
         </div>
 
         <script>
-            var ctx = document.getElementById("myChart");
-            var ctx2 = document.getElementById("myChart2");
-            var ctx3 = document.getElementById("myChart3");
+            var ctx = document.getElementById("flat_chart");
+            var ctx2 = document.getElementById("contract_chart");
+            var ctx3 = document.getElementById("tenant_chart");
 
             var data_flats = {
                 labels: [
@@ -295,7 +291,7 @@
                 ],
                 datasets: [
                     {
-                        data: [{{ nb_occupied_flats }}, {{ flats_warning_not_relet | length }}, {{ nb_empty_flats_not_relet }}, {{ nb_empty_flats_relet }}],
+                        data: [{{ nb_occupied_flats }}, {{ warning_flats_not_relet | length }}, {{ free_flats_not_relet | length }}, {{ free_flats_relet | length }}],
                         backgroundColor: [
                             "#BEDB39",
                             "#FF5347",
@@ -318,7 +314,7 @@
                 ],
                 datasets: [
                     {
-                        data: [{{ nb_contracts_without_required_documents }}, {{ nb_contracts_with_required_documents }}],
+                        data: [{{ nb_complete_contracts }}, {{ incomplete_contracts | length }}],
                         backgroundColor: [
                             "#BEDB39",
                             "#FF5347"

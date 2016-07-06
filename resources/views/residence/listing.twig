@@ -6,25 +6,27 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
 
-    <link rel="icon" sizes="192x192" href="img/logo.png" />
+    <link rel="icon" sizes="192x192" href="/img/logo192.png" />
 
-    <link href="img/logo152.png" sizes="152x152" rel="apple-touch-icon-precomposed">
-    <link href="img/logo144.png" sizes="144x144" rel="apple-touch-icon-precomposed">
-    <link href="img/logo76.png" sizes="76x76" rel="apple-touch-icon-precomposed">
-    <link href="img/logo72.png" sizes="72x72" rel="apple-touch-icon-precomposed">
-    <link href="img/logo120.png" sizes="120x120" rel="apple-touch-icon-precomposed">
-    <link href="img/logo114.png" sizes="114x114" rel="apple-touch-icon-precomposed">
-    <link href="img/logo57.png" sizes="57x57" rel="apple-touch-icon-precomposed">
+    <link rel="manifest" href="/json/manifest.json">
 
-    <link rel="apple-touch-startup-image" href="img/splash1280.png"/>
-    <link rel="apple-touch-startup-image" sizes="1242x2208" href="img/splash1242.png" />
-    <link rel="apple-touch-startup-image" sizes="750x1334" href="img/splash750.png" />
-    <link rel="apple-touch-startup-image" sizes="640x1136" href="img/splash640.png" />
-    <link rel="apple-touch-startup-image" sizes="960x1600" href="img/splash960.png" />
-    <link rel="apple-touch-startup-image" sizes="720x1280" href="img/splash720.png" />
-    <link rel="apple-touch-startup-image" sizes="480x800" href="img/splash480.png" />
-    <link rel="apple-touch-startup-image" sizes="320x480" href="img/splash320.png" />
-    <link rel="apple-touch-startup-image" sizes="200x320" href="img/splash200.png" />
+    <link href="/img/logo152.png" sizes="152x152" rel="apple-touch-icon-precomposed">
+    <link href="/img/logo144.png" sizes="144x144" rel="apple-touch-icon-precomposed">
+    <link href="/img/logo76.png" sizes="76x76" rel="apple-touch-icon-precomposed">
+    <link href="/img/logo72.png" sizes="72x72" rel="apple-touch-icon-precomposed">
+    <link href="/img/logo120.png" sizes="120x120" rel="apple-touch-icon-precomposed">
+    <link href="/img/logo114.png" sizes="114x114" rel="apple-touch-icon-precomposed">
+    <link href="/img/logo57.png" sizes="57x57" rel="apple-touch-icon-precomposed">
+
+    <link rel="apple-touch-startup-image" href="/img/splash1280.png"/>
+    <link rel="apple-touch-startup-image" sizes="1242x2208" href="/img/splash1242.png" />
+    <link rel="apple-touch-startup-image" sizes="750x1334" href="/img/splash750.png" />
+    <link rel="apple-touch-startup-image" sizes="640x1136" href="/img/splash640.png" />
+    <link rel="apple-touch-startup-image" sizes="960x1600" href="/img/splash960.png" />
+    <link rel="apple-touch-startup-image" sizes="720x1280" href="/img/splash720.png" />
+    <link rel="apple-touch-startup-image" sizes="480x800" href="/img/splash480.png" />
+    <link rel="apple-touch-startup-image" sizes="320x480" href="/img/splash320.png" />
+    <link rel="apple-touch-startup-image" sizes="200x320" href="/img/splash200.png" />
 
     <meta name="viewport" content="width=device-width" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -47,7 +49,7 @@
                             <div class="panel-heading">
                                 <h3 class="panel-title"><a href="{{ route('residence.index', residence.id) }}" title="{{ residence.name }}">{{ residence.name }}</a></h3>
                             </div>
-                            <table class="table">
+                            <table class="table text-left">
                                 <tr>
                                     <td>{{ residence.nb_flats }} {{ trans_choice('global.flat.title', residence.nb_flats) | lower }}</td>
                                 </tr>

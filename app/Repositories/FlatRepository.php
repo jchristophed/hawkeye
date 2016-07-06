@@ -40,32 +40,42 @@ class FlatRepository implements FlatRepositoryInterface {
     }
 
     // retourne la liste des logements inoccupés
-    public function indexUnoccupied($residenceId) {
+    public function indexFree($residenceId) {
 
-        return  $this->scopeOnResidenceOnly($residenceId)
-                ->select('flat.id', 'flat.block', 'flat.floor', 'flat.name', 'flat.price', 'flat.area', 'flat.view')
-                ->whereNotIn('flat.id', $this->contractRepository->indexRunningFlatId($residenceId))
-                ->get();
+        return  $this   ->scopeOnResidenceOnly($residenceId)
+                        ->select('flat.id', 'flat.block', 'flat.floor', 'flat.name', 'flat.price', 'flat.area', 'flat.view')
+                        ->whereNotIn('flat.id', $this->contractRepository->indexRunningFlatId($residenceId))
+                        ->get();
     }
 
-    // retourne la liste des logements inoccupés maintenant et a l'avenir
-    public function indexUnoccupiedNowAndFuture($residenceId) {
+    // retourne la liste des logements inoccupés et non reloués
+    public function indexFreeNotRelet($residenceId) {
 
-        return  $this->scopeOnResidenceOnly($residenceId)
-            ->select('flat.id', 'flat.block', 'flat.floor', 'flat.name', 'flat.price', 'flat.area', 'flat.view')
-            ->whereNotIn('flat.id', $this->contractRepository->indexRunningAndFutureFlatId($residenceId))
-            ->get();
+        return  $this   ->scopeOnResidenceOnly($residenceId)
+                        ->select('flat.id', 'flat.block', 'flat.floor', 'flat.name', 'flat.price', 'flat.area', 'flat.view')
+                        ->whereNotIn('flat.id', $this->contractRepository->indexRunningReletFlatId($residenceId))
+                        ->get();
     }
 
     // retourne la liste des logements avec préavis non reloués
     public function indexWarningNotRelet($residenceId) {
 
-        return  $this->scopeOnResidenceOnly($residenceId)
-            ->select('flat.id', 'flat.block', 'flat.floor', 'flat.name', 'flat.price', 'flat.area', 'flat.view')
-            ->whereIn('flat.id', $this->contractRepository->indexRunningAndFutureFlatId($residenceId))
-            ->whereNotIn('flat.id', $this->contractRepository->indexRunningWithoutWarningFlatId($residenceId))
-            ->whereNotIn('flat.id', $this->contractRepository->indexFutureFlatId($residenceId))
-            ->get();
+        return  $this   ->scopeOnResidenceOnly($residenceId)
+                        ->select('flat.id', 'flat.block', 'flat.floor', 'flat.name', 'flat.price', 'flat.area', 'flat.view')
+                        ->whereIn('flat.id', $this->contractRepository->indexRunningReletFlatId($residenceId))
+                        ->whereNotIn('flat.id', $this->contractRepository->indexRunningWithoutWarningFlatId($residenceId))
+                        ->whereNotIn('flat.id', $this->contractRepository->indexReletFlatId($residenceId))
+                        ->get();
+    }
+
+    // retourne la liste des logements vides et reloués
+    public function indexFreeRelet($residenceId) {
+
+        return  $this   ->scopeOnResidenceOnly($residenceId)
+                        ->select('flat.id', 'flat.block', 'flat.floor', 'flat.name', 'flat.price', 'flat.area', 'flat.view')
+                        ->whereNotIn('flat.id', $this->contractRepository->indexRunningFlatId($residenceId))
+                        ->whereIn('flat.id', $this->contractRepository->indexReletFlatId($residenceId))
+                        ->get();
     }
 
     // COMPTEURS
@@ -79,13 +89,19 @@ class FlatRepository implements FlatRepositoryInterface {
     // retourne le nombre de logements inoccupés
     public function getNbFreeFlats($residenceId) {
 
-        return $this->indexUnoccupied($residenceId)->count();
+        return $this->indexFree($residenceId)->count();
     }
 
-    // retourne le nombre de logements inoccupés
-    public function getNbFreeFlatsAndFuture($residenceId) {
+    // retourne le nombre de logements inoccupés non reloués
+    public function getNbFreeFlatsNotRelet($residenceId) {
 
-        return $this->indexUnoccupiedNowAndFuture($residenceId)->count();
+        return $this->indexFreeNotRelet($residenceId)->count();
+    }
+
+    // retourne le nombre de logements inoccupés reloués
+    public function getNbFreeFlatsRelet($residenceId) {
+
+        return $this->indexFreeRelet($residenceId)->count();
     }
 
     // retourne le nombre de logements occupés
@@ -108,6 +124,9 @@ class FlatRepository implements FlatRepositoryInterface {
         return $this->flat->findOrFail($id);
     }
 
+    // GESTION
+    // --------------------
+
     private function save(Flat $flat, Array $inputs)
     {
         $flat->block = $inputs['block'];
@@ -119,11 +138,6 @@ class FlatRepository implements FlatRepositoryInterface {
         $flat->residence_id = $inputs['residence_id'];
 
         $flat->save();
-    }
-
-    public function getPaginate($n)
-    {
-        return $this->user->paginate($n);
     }
 
     public function store(Array $inputs)
