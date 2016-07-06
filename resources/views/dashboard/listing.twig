@@ -99,6 +99,48 @@
 
                 </table>
             </div>
+
+            <div class="panel panel-danger">
+                <div class="panel-heading">{{ trans_choice('global.flat.title', 2) }} {{ trans_choice('global.flat.full_not_relet', 2) | lower }}</div>
+                <table class="table text-center">
+
+                    {% for flat in flats_warning_not_relet if flat.next_contract.id is empty %}
+
+                        {% if loop.index == 1 %}
+
+                            <thead>
+                            <tr>
+                                <th class="text-center hidden-sm">#</th>
+                                <th class="text-center">{{ trans('global.lbl.num') }}</th>
+                                <th class="text-center">{{ trans('global.flat.price') }}</th>
+                                <th class="text-center hidden-sm">{{ trans('global.flat.area') }}</th>
+                                <th class="text-center"></th>
+                            </tr>
+                            </thead>
+
+                        {% endif %}
+
+                        <tr>
+                            <td class="hidden-sm">{{ loop.index }}</td>
+                            <td>{{ flat.name }}</td>
+                            <td>{{ flat.full_price }}</td>
+                            <td class="hidden-sm">{{ flat.full_area }}</td>
+                            <td>
+                                <a href="{{ route('residence.flat.show', [residence.id, flat.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default pull-right">{{ trans('global.lbl.show') }}</a>
+                            </td>
+                        </tr>
+
+                    {% else %}
+
+                        <tr>
+                            <td colspan="8" class="text-danger">{{ trans('global.flat.no_empty') }}</td>
+                        </tr>
+
+                    {% endfor %}
+
+                </table>
+            </div>
+
         </div>
 
         <div class="col-sm-4">
@@ -238,20 +280,23 @@
             var data_flats = {
                 labels: [
                     "{{ trans('global.flat.full') }}",
+                    "{{ trans_choice('global.flat.full_not_relet', 2) }}",
                     "{{ trans_choice('global.flat.empty_not_relet', 2) }}",
                     "{{ trans_choice('global.flat.empty_relet', 2) }}"
                 ],
                 datasets: [
                     {
-                        data: [{{ nb_occupied_flats }}, {{ nb_empty_flats_not_relet }}, {{ nb_empty_flats_relet }}],
+                        data: [{{ nb_occupied_flats }}, {{ flats_warning_not_relet | length }}, {{ nb_empty_flats_not_relet }}, {{ nb_empty_flats_relet }}],
                         backgroundColor: [
                             "#BEDB39",
                             "#FF5347",
+                            "#BF0526",
                             "#FFCF00"
                         ],
                         hoverBackgroundColor: [
                             "#BEDB39",
                             "#FF5347",
+                            "#BF0526",
                             "#FFCF00"
                         ]
                     }]

@@ -45,7 +45,7 @@
 
             {% for flat in flats %}
 
-                <tr {% if flat.contract.id is empty and flat.next_contract.id is empty %}class="danger"{% endif %}>
+                <tr {% if (flat.contract.id is empty and flat.next_contract.id is empty) or (flat.contract.end_date != '0000-00-00' and flat.next_contract.id is empty) %}class="danger"{% endif %}>
                     <td class="hidden-sm hidden-xs">{{ flat.block }}</td>
                     <td class="hidden-sm hidden-xs">{{ flat.floor }}</td>
                     <td>{{ flat.name }}</td>

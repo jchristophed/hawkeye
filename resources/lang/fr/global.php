@@ -43,6 +43,7 @@ return [
         'empty'                 => 'Logement vide|Logements vides',
         'empty_relet'           => 'Vide reloué|Vides reloués',
         'empty_not_relet'       => 'Vide non reloué|Vides non reloués',
+        'full_not_relet'        => 'Avec préavis non reloué|Avec préavis non reloués',
         'full'                  => 'Occupés',
         'all_full'              => 'Tous les logements sont occupés',
         'no_relet'              => 'Aucun des logements vides n\'est reloué',

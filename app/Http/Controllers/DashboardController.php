@@ -40,6 +40,7 @@ class DashboardController extends Controller
      */
     public function index($residenceId)
     {
+
         $freeFlats = $this->flatRepository->indexUnoccupied($residenceId);
 
         foreach($freeFlats as $flat) {
@@ -64,6 +65,7 @@ class DashboardController extends Controller
         $tenantsTodayBirthday = $this->tenantRepository->indexTodayBirthday($residenceId);
 
         return view('dashboard.listing', [  'flats' => $freeFlats,
+                                            'flats_warning_not_relet' => $this->flatRepository->indexWarningNotRelet($residenceId),
                                             'incomplete_contracts' => $incompleteContracts,
                                             'booked_contracts' => $bookedContracts,
                                             'tenants_birthday' => $tenantsTodayBirthday,

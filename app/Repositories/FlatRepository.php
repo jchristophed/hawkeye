@@ -57,6 +57,17 @@ class FlatRepository implements FlatRepositoryInterface {
             ->get();
     }
 
+    // retourne la liste des logements avec préavis non reloués
+    public function indexWarningNotRelet($residenceId) {
+
+        return  $this->scopeOnResidenceOnly($residenceId)
+            ->select('flat.id', 'flat.block', 'flat.floor', 'flat.name', 'flat.price', 'flat.area', 'flat.view')
+            ->whereIn('flat.id', $this->contractRepository->indexRunningAndFutureFlatId($residenceId))
+            ->whereNotIn('flat.id', $this->contractRepository->indexRunningWithoutWarningFlatId($residenceId))
+            ->whereNotIn('flat.id', $this->contractRepository->indexFutureFlatId($residenceId))
+            ->get();
+    }
+
     // COMPTEURS
     // --------------------
 
