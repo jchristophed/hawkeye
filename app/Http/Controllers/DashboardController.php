@@ -43,10 +43,17 @@ class DashboardController extends Controller
 
         $freeFlats = $this->flatRepository->indexUnoccupied($residenceId);
 
-        foreach($freeFlats as $flat) {
+        foreach ($freeFlats as $flat) {
 
             $flat->setContract($this->contractRepository->getActiveByFlat($residenceId, $flat));
             $flat->setNextContract($this->contractRepository->getNextByFlat($residenceId, $flat));
+        }
+
+        $warningFlatsNotRelet = $this->flatRepository->indexWarningNotRelet($residenceId);
+
+        foreach ($warningFlatsNotRelet as $flat) {
+
+            $flat->setContract($this->contractRepository->getActiveByFlat($residenceId, $flat));
         }
 
         $incompleteContracts = $this->contractRepository->indexIncomplete($residenceId);
@@ -65,7 +72,7 @@ class DashboardController extends Controller
         $tenantsTodayBirthday = $this->tenantRepository->indexTodayBirthday($residenceId);
 
         return view('dashboard.listing', [  'flats' => $freeFlats,
-                                            'flats_warning_not_relet' => $this->flatRepository->indexWarningNotRelet($residenceId),
+                                            'flats_warning_not_relet' => $warningFlatsNotRelet,
                                             'incomplete_contracts' => $incompleteContracts,
                                             'booked_contracts' => $bookedContracts,
                                             'tenants_birthday' => $tenantsTodayBirthday,

@@ -113,7 +113,7 @@
                                 <th class="text-center hidden-sm">#</th>
                                 <th class="text-center">{{ trans('global.lbl.num') }}</th>
                                 <th class="text-center">{{ trans('global.flat.price') }}</th>
-                                <th class="text-center hidden-sm">{{ trans('global.flat.area') }}</th>
+                                <th class="text-center hidden-sm">{{ trans('global.contract.deadline') }}</th>
                                 <th class="text-center"></th>
                             </tr>
                             </thead>
@@ -124,7 +124,7 @@
                             <td class="hidden-sm">{{ loop.index }}</td>
                             <td>{{ flat.name }}</td>
                             <td>{{ flat.full_price }}</td>
-                            <td class="hidden-sm">{{ flat.full_area }}</td>
+                            <td class="hidden-sm"><a href="{{ route('residence.contract.show', [residence.id, flat.contract.id]) }}" class="label label-danger" style="text-decoration: none">{{ trans('global.flat.end') }} {{ flat.contract.end_date | date('d/m/y') }}</a></td>
                             <td>
                                 <a href="{{ route('residence.flat.show', [residence.id, flat.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default pull-right">{{ trans('global.lbl.show') }}</a>
                             </td>
@@ -169,8 +169,7 @@
                             <td>{{ flat.name }}</td>
                             <td class="hidden-sm">{{ flat.full_price }}</td>
                             <td>
-                                {% if flat.contract.id is not empty and flat.contract.end_date != '0000-00-00' %}<a href="{{ route('residence.contract.show', [residence.id, flat.contract.id]) }}" class="label label-danger" style="text-decoration: none">{{ trans('global.flat.end') }} {{ flat.contract.end_date | date('d/m/y') }}</a>{% endif %}
-                                {% if flat.next_contract.id is not empty %}<a href="{{ route('residence.contract.show', [residence.id, flat.next_contract.id]) }}" class="label label-success" style="text-decoration: none">{{ trans('global.flat.relet') }} {{ flat.next_contract.start_date | date('d/m/y') }}</a>{% endif %}
+                                <a href="{{ route('residence.contract.show', [residence.id, flat.next_contract.id]) }}" class="label label-success" style="text-decoration: none">{{ trans('global.flat.relet') }} {{ flat.next_contract.start_date | date('d/m/y') }}</a>
                             </td>
                             <td>
                                 <a href="{{ route('residence.flat.show', [residence.id, flat.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default pull-right">{{ trans('global.lbl.show') }}</a>
