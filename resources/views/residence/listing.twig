@@ -54,6 +54,9 @@
                                 <tr class="{% if residence.nb_free_flats > 0 %}danger{% else %}success{% endif %}">
                                     <td>{{ residence.nb_free_flats }} {{ trans_choice('global.flat.title', nb_free_flats) | lower }} {{ trans_choice('global.flat.empty_not_relet', residence.nb_free_flats) | lower }}</td>
                                 </tr>
+                                <tr class="{% if residence.nb_warning_flats_not_relet > 0 %}danger{% else %}success{% endif %}">
+                                    <td>{{ residence.nb_warning_flats_not_relet }} {{ trans_choice('global.flat.title', nb_warning_flats_not_relet) | lower }} {{ trans_choice('global.flat.full_not_relet', residence.nb_warning_flats_not_relet) | lower }}</td>
+                                </tr>
                                 <tr class="{% if residence.nb_incomplete_contracts > 0 %}danger{% else %}success{% endif %}">
                                     <td>{{ residence.nb_incomplete_contracts }} {{ trans_choice('global.contract.incomplete', residence.nb_incomplete_contracts) | lower }}</td>
                                 </tr>

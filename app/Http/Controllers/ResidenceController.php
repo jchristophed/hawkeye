@@ -37,6 +37,7 @@ class ResidenceController extends Controller
             $residence->setNbFlats($this->flatRepository->getNbFlats($residence->id));
             $residence->setNbIncompleteContracts($this->contractRepository->getNbIncompleteContracts($residence->id));
             $residence->setNbFreeFlats($this->flatRepository->getNbFreeFlatsAndFuture($residence->id));
+            $residence->setNbWarningFlatsNotRelet($this->flatRepository->getNbWarningFlatsNotRelet($residence->id));
         }
 
         return view('residence.listing', ['residences' => $residences]);

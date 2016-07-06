@@ -13,6 +13,7 @@ class Residence extends Model
     private $nb_flats;
     private $nb_incomplete_contracts;
     private $nb_free_flats;
+    private $nb_warning_flats_not_relet;
 
     public function getNbFlatsAttribute() {
 
@@ -29,6 +30,11 @@ class Residence extends Model
         return $this->nb_free_flats;
     }
 
+    public function getNbWarningFlatsNotReletAttribute() {
+
+        return $this->nb_warning_flats_not_relet;
+    }
+
     public function setNbFlats($value) {
 
         $this->nb_flats = $value;
@@ -43,4 +49,10 @@ class Residence extends Model
 
         $this->nb_free_flats = $value;
     }
+
+    public function setNbWarningFlatsNotRelet($value) {
+
+        $this->nb_warning_flats_not_relet = $value;
+    }
+
 }

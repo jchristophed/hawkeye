@@ -94,6 +94,12 @@ class FlatRepository implements FlatRepositoryInterface {
         return $this->getNbFlats($residenceId) - $this->getNbFreeFlats($residenceId);
     }
 
+    // retourne le nombre de logements avec préavis non reloués
+    public function getNbWarningFlatsNotRelet($residenceId) {
+
+        return $this->indexWarningNotRelet($residenceId)->count();
+    }
+
     // UNIQUE
     // --------------------
 
