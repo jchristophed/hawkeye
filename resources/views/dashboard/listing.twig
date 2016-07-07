@@ -61,7 +61,7 @@
                 <div class="panel-heading">{{ trans_choice('global.flat.title', 2) }} {{ trans_choice('global.flat.empty_not_relet', 2) | lower }}</div>
 
                 {# logements vides non reloues #}
-                <table class="table text-center">
+                <table class="table table-condensed table-striped text-center">
 
                     {% if free_flats_not_relet is not empty %}
 
@@ -104,7 +104,7 @@
                 <div class="panel-heading">{{ trans_choice('global.flat.title', 2) }} {{ trans_choice('global.flat.full_not_relet', 2) | lower }}</div>
 
                 {# logements occupés avec préavis non reloués #}
-                <table class="table text-center">
+                <table class="table table-condensed table-striped text-center">
 
                     {% if warning_flats_not_relet is not empty %}
 
@@ -150,7 +150,7 @@
                 <div class="panel-heading">{{ trans_choice('global.flat.title', 2) }} {{ trans_choice('global.flat.empty_relet', 2) | lower }}</div>
 
                 {# logements vides reloués #}
-                <table class="table text-center">
+                <table class="table table-condensed table-striped text-center">
 
                     {% if free_flats_relet is not empty %}
 
@@ -198,7 +198,7 @@
                 <div class="panel-heading">{{ trans_choice('global.contract.book', 2) }}</div>
 
                 {# contrats pré-réservés #}
-                <table class="table text-center">
+                <table class="table table-condensed table-striped text-center">
 
                     {% if booked_contracts is not empty %}
 
@@ -239,7 +239,7 @@
                 <div class="panel-heading">{{ trans_choice('global.contract.incomplete', 2) }}</div>
 
                 {# contrats incomplets #}
-                <table class="table text-center">
+                <table class="table table-condensed table-striped text-center">
 
                     {% if incomplete_contracts is not empty  %}
 
