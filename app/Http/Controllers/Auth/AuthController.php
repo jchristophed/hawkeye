@@ -53,13 +53,13 @@ class AuthController extends Controller
 
     public function getSocialRedirect($provider)
     {
-        return Socialite::driver($provider)->redirect();
+        //return Socialite::driver($provider)->redirect();
     }
 
     public function getSocialHandle($provider)
     {
-        $user = Socialite::driver($provider)->user();
-        echo $user->getEmail();
+        //$user = Socialite::driver($provider)->user();
+        //echo $user->getEmail();
 
     }
 }
