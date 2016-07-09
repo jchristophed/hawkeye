@@ -16,6 +16,7 @@ use App\Repositories\ContractRepositoryInterface;
 use App\Repositories\FlatRepositoryInterface;
 use App\Repositories\TenantRepositoryInterface;
 use App\Repositories\DocumentRepositoryInterface;
+use Socialite;
 
 use Illuminate\Support\Facades\DB;
 
