@@ -13,6 +13,7 @@ use App\Repositories\FlatRepositoryInterface;
 use App\Repositories\ContractRepositoryInterface;
 use App\Repositories\BlockRepositoryInterface;
 use App\Repositories\ViewRepositoryInterface;
+use Socialite;
 
 class FlatController extends Controller
 {

@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Contract;
 use App\Models\Flat;
 use App\Models\Tenant;
+use Socialite;
 
 class ContractRepository implements ContractRepositoryInterface {
     

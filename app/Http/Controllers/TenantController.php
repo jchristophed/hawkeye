@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Lang;
 use App\Repositories\ResidenceRepositoryInterface;
 use App\Repositories\TenantRepositoryInterface;
 use App\Repositories\ContractRepositoryInterface;
+use Socialite;
 
 class TenantController extends Controller
 {

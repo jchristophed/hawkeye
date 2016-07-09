@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Repositories\ResidenceRepositoryInterface;
 use App\Repositories\FlatRepositoryInterface;
 use App\Repositories\ContractRepositoryInterface;
+use Socialite;
 
 class ResidenceController extends Controller
 {
