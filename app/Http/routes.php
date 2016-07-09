@@ -26,8 +26,12 @@ Route::get('/', function () {
 |
 */
 
-Route::resource('/', 'ResidenceController');
-Route::get('/residence/{residence}/', ['as' => 'residence.index', 'uses' => 'DashboardController@index']);
+Route::resource('/', 'Auth\AuthController@index');
+Route::resource('/residence/', 'ResidenceController@index');
+Route::get('/residence/{residence}/', ['middleware' => 'auth', 'as' => 'residence.index', 'uses' => 'DashboardController@index']);
 Route::resource('residence.flat', 'FlatController');
 Route::resource('residence.tenant', 'TenantController');
 Route::resource('residence.contract', 'ContractController');
+
+Route::get('/social/redirect/{provider}',   ['as' => 'social.redirect', 'uses' => 'Auth\AuthController@getSocialRedirect']);
+Route::get('/social/handle/{provider}',     ['as' => 'social.handle', 'uses' => 'Auth\AuthController@getSocialHandle']);

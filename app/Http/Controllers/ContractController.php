@@ -36,6 +36,7 @@ class ContractController extends Controller
                                     DocumentRepositoryInterface $documentRepositoryInterface,
                                     Route $route)
     {
+        $this->middleware('auth');
         $this->residenceRepository = $residenceRepositoryInterface;
         $this->contractRepository = $contractRepositoryInterface;
         $this->flatRepository = $flatRepositoryInterface;

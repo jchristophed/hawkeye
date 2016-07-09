@@ -18,6 +18,7 @@ class ResidenceController extends Controller
 
     public function __construct(ResidenceRepositoryInterface $residenceRepositoryInterface, FlatRepositoryInterface $flatRepositoryInterface, ContractRepositoryInterface $contractRepositoryInterface)
     {
+        $this->middleware('auth');
         $this->residenceRepository = $residenceRepositoryInterface;
         $this->flatRepository = $flatRepositoryInterface;
         $this->contractRepository = $contractRepositoryInterface;
