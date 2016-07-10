@@ -59,6 +59,10 @@ class AuthController extends Controller
     public function getSocialHandle($provider)
     {
         $user = Socialite::driver($provider)->user();
+        if($user)
+        {
+            return redirect()->route('home');
+        }
 
     }
 }
