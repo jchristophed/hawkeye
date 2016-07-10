@@ -61,7 +61,7 @@ class AuthController extends Controller
         $user = Socialite::driver($provider)->user();
         if($user)
         {
-            return redirect()->route('home');
+            return redirect('/');
         }
 
     }

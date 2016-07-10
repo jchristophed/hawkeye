@@ -26,7 +26,7 @@ Route::get('/', function () {
 |
 */
 
-Route::resource('/', ['as' => 'home', 'uses' => 'Auth\AuthController@index']);
+Route::resource('/', 'Auth\AuthController@index');
 Route::resource('/residence/', 'ResidenceController@index');
 Route::get('/residence/{residence}/', ['middleware' => 'auth', 'as' => 'residence.index', 'uses' => 'DashboardController@index']);
 Route::resource('residence.flat', 'FlatController');
