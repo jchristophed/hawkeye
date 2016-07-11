@@ -25,7 +25,8 @@ return [
         'edit_suffix'           => 'a été modifié',
         'delete_suffix'         => 'a été supprimé',
         'not_specified'         => 'Non renseigné',
-        'birthday'              => 'Anniversaires de la semaine'
+        'birthday'              => 'Anniversaires de la semaine',
+        'hello'                 => 'Bonjour',
     ],
 
     'residence' => [

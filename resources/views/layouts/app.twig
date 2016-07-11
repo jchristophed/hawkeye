@@ -66,6 +66,16 @@
                             <li {% if controller == 'ContractController' %}class="active"{% endif %}><a href="{{ route('residence.contract.index', residence.id) }}"><span class="glyphicon glyphicon-duplicate"></span> {{ trans_choice('global.contract.title', 2) }}</a></li>
 
                         </ul>
+
+                        {% if auth_check  %}
+
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a href="javascript:void(0)"><img src="https://placeholdit.imgix.net/~text?txtsize=8&txt=50%C3%9750&w=20&h=20" alt="{{ trans('global.lbl.hello') }} {{ auth_user().name }} !" class="pull-right">{{ trans('global.lbl.hello') }} {{ auth_user().name }} !</a></li>
+                            </ul>
+
+                        {% endif %}
+
                     </div>
 
                 </div>

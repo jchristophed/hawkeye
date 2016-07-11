@@ -7,7 +7,6 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -45,7 +44,7 @@ class AuthController extends Controller
     public function index() {
 
         if (Auth::check()) {
-            return redirect('residence/');
+            return redirect()->route('residence.home');
         } else {
             return view('auth.index');
         }
@@ -54,45 +53,26 @@ class AuthController extends Controller
     public function getSocialRedirect($provider)
     {
         $providerKey = \Config::get('services.' . $provider);
-        if(empty($providerKey))
-            return view('pages.status')
-                ->with('error','No such provider');
+        if(empty($providerKey)) {
 
-        return Socialite::driver($provider)->redirect();
+            //return view('pages.status')->with('error', 'No such provider');
+        }
+
+        return \Socialite::driver($provider)->redirect();
     }
 
     public function getSocialHandle($provider)
     {
-        $user = Socialite::driver($provider)->user();
-
+        $user = \Socialite::driver($provider)->user();
         $socialUser = null;
 
-        //Check is this email present
         $userCheck = User::where('email', '=', $user->email)->first();
 
         if(!empty($userCheck))  {
 
             $socialUser = $userCheck;
+            \Auth::login($socialUser, true);
+            return redirect()->route('residence.home');
         }
-        else {
-
-            $sameSocialId = Social::where('social_id', '=', $user->id)->where('provider', '=', $provider )->first();
-
-            if(!empty($sameSocialId)) {
-
-                //Load this existing social user
-                $socialUser = $sameSocialId->user;
-            } else {
-                return redirect('/');
-            }
-
-        }
-
-        $this->auth->login($socialUser, true);
-
-        return redirect('/');
-
-        return \App::abort(500);
-
     }
 }
