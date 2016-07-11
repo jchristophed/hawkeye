@@ -14,6 +14,11 @@ return [
     |
     */
 
+    'app' => [
+        'env' => env('APP_ENV'),
+        'debug' => env('APP_DEBUG'),
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),

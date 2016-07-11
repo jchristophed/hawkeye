@@ -38,7 +38,10 @@ class ContractController extends Controller
                                     Route $route)
     {
 
-        $this->middleware('auth');
+        if (\Config::get('app.env') == 'production') {
+            $this->middleware('auth');
+        }
+
         $this->residenceRepository = $residenceRepositoryInterface;
         $this->contractRepository = $contractRepositoryInterface;
         $this->flatRepository = $flatRepositoryInterface;

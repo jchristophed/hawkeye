@@ -22,7 +22,7 @@
 |
 */
 
-Route::get('/', ['as' => 'home', 'uses' => 'ResidenceController@index', 'middleware' => 'auth']);
+Route::get('/', ['as' => 'home', 'uses' => 'ResidenceController@index']);
 Route::get('/login', ['as' => 'auth.login', 'uses' => 'Auth\AuthController@login']);
 Route::get('/logout', ['as' => 'auth.logout', 'uses' => 'Auth\AuthController@logout']);
 Route::get('/residence/{residence}/', ['as' => 'residence.index', 'uses' => 'DashboardController@index'])->where(['residence' => '[0-9]+']);;

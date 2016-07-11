@@ -73,11 +73,10 @@
                                 <li>
                                     <a href="javascript:void(0)" title="{{ trans('global.lbl.hello') }} {{ auth_user().name }}">
                                         {{ trans('global.lbl.hello') }} {{ auth_user().name }}
-                                        <img src="{{ auth_user().avatar }}" alt="{{ trans('global.lbl.hello') }} {{ auth_user().name }}" style="width: 20px; height: 20px"/>
                                     </a>
                                  </li>
                                 <li>
-                                    <a href="{{ route('auth.logout') }}" title="{{ trans('global.lbl.logout') }}" class="text-danger"><span class="glyphicon glyphicon-log-out"></span></a>
+                                    <a href="{{ route('auth.logout') }}" title="{{ trans('global.lbl.logout') }}"><span class="glyphicon glyphicon-log-out text-danger"></span></a>
                                 </li>
                             </ul>
 

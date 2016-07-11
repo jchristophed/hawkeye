@@ -24,7 +24,10 @@ class TenantController extends Controller
 
     public function __construct(ResidenceRepositoryInterface $residenceRepositoryInterface, TenantRepositoryInterface $tenantRepositoryInterface, ContractRepositoryInterface $contractRepositoryInterface, Route $route)
     {
-        $this->middleware('auth');
+        if (\Config::get('app.env') == 'production') {
+            $this->middleware('auth');
+        }
+
         $this->residenceRepository = $residenceRepositoryInterface;
         $this->tenantRepository = $tenantRepositoryInterface;
         $this->contractRepository = $contractRepositoryInterface;
