@@ -38,10 +38,7 @@ class ContractController extends Controller
                                     Route $route)
     {
 
-        if (isset(Auth::user()->email)) {
-            echo Auth::user()->email;
-        }
-        //$this->middleware('auth');
+        $this->middleware('auth');
         $this->residenceRepository = $residenceRepositoryInterface;
         $this->contractRepository = $contractRepositoryInterface;
         $this->flatRepository = $flatRepositoryInterface;

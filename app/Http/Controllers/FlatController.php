@@ -28,7 +28,7 @@ class FlatController extends Controller
 
     public function __construct(ResidenceRepositoryInterface $residenceRepositoryInterface, FlatRepositoryInterface $flatRepositoryInterface, ContractRepositoryInterface $contractRepositoryInterface, BlockRepositoryInterface $blockRepositoryInterface, ViewRepositoryInterface $viewRepositoryInterface, Route $route)
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
         $this->residenceRepository = $residenceRepositoryInterface;
         $this->flatRepository = $flatRepositoryInterface;
         $this->contractRepository = $contractRepositoryInterface;

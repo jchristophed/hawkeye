@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -27,7 +23,7 @@ Route::get('/', function () {
 */
 
 Route::get('/', ['as' => 'login', 'uses' => 'Auth\AuthController@index']);
-Route::get('/residence/', ['as' => 'residence.home', 'uses' => 'ResidenceController@index']);
+Route::get('/residence/', ['as' => 'residence.home', 'uses' => 'ResidenceController@index', 'middleware' => 'auth']);
 Route::get('/residence/{residence}/', ['as' => 'residence.index', 'uses' => 'DashboardController@index']);
 Route::get('/social/redirect/{provider}',   ['as' => 'social.redirect', 'uses' => 'Auth\AuthController@getSocialRedirect']);
 Route::get('/social/handle/{provider}',     ['as' => 'social.handle', 'uses' => 'Auth\AuthController@getSocialHandle']);
