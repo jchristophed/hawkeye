@@ -27,6 +27,7 @@ return [
         'not_specified'         => 'Non renseigné',
         'birthday'              => 'Anniversaires de la semaine',
         'hello'                 => 'Bonjour',
+        'logout'                => 'Déconnexion',
     ],
 
     'residence' => [

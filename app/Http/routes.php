@@ -22,11 +22,12 @@
 |
 */
 
-Route::get('/', ['as' => 'login', 'uses' => 'Auth\AuthController@index']);
-Route::get('/residence/', ['as' => 'residence.home', 'uses' => 'ResidenceController@index', 'middleware' => 'auth']);
-Route::get('/residence/{residence}/', ['as' => 'residence.index', 'uses' => 'DashboardController@index']);
-Route::get('/social/redirect/{provider}',   ['as' => 'social.redirect', 'uses' => 'Auth\AuthController@getSocialRedirect']);
-Route::get('/social/handle/{provider}',     ['as' => 'social.handle', 'uses' => 'Auth\AuthController@getSocialHandle']);
+Route::get('/', ['as' => 'home', 'uses' => 'ResidenceController@index', 'middleware' => 'auth']);
+Route::get('/login', ['as' => 'auth.login', 'uses' => 'Auth\AuthController@login']);
+Route::get('/logout', ['as' => 'auth.logout', 'uses' => 'Auth\AuthController@logout']);
+Route::get('/residence/{residence}/', ['as' => 'residence.index', 'uses' => 'DashboardController@index'])->where(['residence' => '[0-9]+']);;
+Route::get('/social/redirect/{provider}',   ['as' => 'social.redirect', 'uses' => 'Auth\AuthController@getSocialRedirect'])->where(['provider' => '[a-z]+']);;
+Route::get('/social/handle/{provider}',     ['as' => 'social.handle', 'uses' => 'Auth\AuthController@getSocialHandle'])->where(['provider' => '[a-z]+']);;
 
 Route::resource('residence.flat', 'FlatController');
 Route::resource('residence.tenant', 'TenantController');

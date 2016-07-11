@@ -71,7 +71,9 @@
 
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
-                                    <a href="javascript:void(0)"><img src="{{ auth_user().avatar }}" style="width: 20px; height: 20px" alt="{{ trans('global.lbl.hello') }} {{ auth_user().name }} !" class="pull-right">{{ trans('global.lbl.hello') }} {{ auth_user().name }} !</a></li>
+                                    <a href="javascript:void(0)"><img src="{{ auth_user().avatar }}" style="width: 20px; height: 20px" alt="{{ trans('global.lbl.hello') }} {{ auth_user().name }}" class="pull-right">{{ trans('global.lbl.hello') }} {{ auth_user().name }}</a>
+                                    <a href="{{ route('auth.logout') }}" title="{{ trans('global.lbl.logout') }}"><span class="glyphicon glyphicon-log-out"></span> {{ trans('global.lbl.logout') }}</a>
+                                </li>
                             </ul>
 
                         {% endif %}

@@ -41,10 +41,10 @@ class AuthController extends Controller
         //$this->middleware('guest', ['except' => 'logout']);
     }
 
-    public function index() {
+    public function login() {
 
-        if (Auth::check()) {
-            return redirect()->route('residence.home');
+        if (\Auth::check()) {
+            return redirect()->route('home');
         } else {
             return view('auth.index');
         }
@@ -70,9 +70,14 @@ class AuthController extends Controller
 
         if(!empty($userCheck))  {
 
-            $socialUser = $userCheck;
-            \Auth::login($socialUser, true);
-            return redirect()->route('residence.home');
+            \Auth::login($userCheck, true);
+            return redirect()->route('home');
         }
+    }
+
+    public function logout() {
+
+        \Auth::logout();
+        return redirect()->route('auth.login');
     }
 }
