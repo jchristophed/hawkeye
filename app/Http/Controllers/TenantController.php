@@ -78,7 +78,7 @@ class TenantController extends Controller
     {
         $tenant = $this->tenantRepository->store($request->all());
 
-        return redirect('residence/' . $residenceId . '/contract/create')->withOk(Lang::get('global.tenant.action_prefix') . ' ' . $tenant->name . ' ' . Lang::get('global.lbl.add_suffix'));
+        return redirect('residence/' . $residenceId . '/contract/create/')->withOk(Lang::get('global.tenant.action_prefix') . ' ' . $tenant->name . ' ' . Lang::get('global.lbl.add_suffix'));
     }
 
     /**

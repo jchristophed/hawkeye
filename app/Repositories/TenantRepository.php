@@ -46,7 +46,7 @@ class TenantRepository implements TenantRepositoryInterface {
     // retourne la liste des locataires pour la liste déroulante d'un nouveau contrat
     public function indexForNewContract($residenceId) {
 
-        return $this->tenant->where('residence_id', $residenceId)->orderBy('lastname', 'asc')->get()->pluck('full_name', 'id');
+        return $this->tenant->where('residence_id', $residenceId)->orderBy('lastname', 'asc')->get()->pluck('full_name', 'id')->all();
     }
 
     // retourne tous les locataires dont c'est l'anniversaire aujourd'hui
@@ -109,6 +109,12 @@ class TenantRepository implements TenantRepositoryInterface {
     public function getById($id) {
 
         return $this->tenant->findOrFail($id);
+    }
+
+    // retourne le dernier locataire créé pour la liste déroulante d'un nouveau contrat
+    public function getLastForNewContract($residenceId) {
+
+        return $this->tenant->where('residence_id', $residenceId)->orderBy('id', 'desc')->limit(1)->get()->pluck('full_name', 'id')->all();
     }
 
     private function save(Tenant $tenant, Array $inputs)

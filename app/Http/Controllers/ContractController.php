@@ -76,10 +76,14 @@ class ContractController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($residenceId)
+    public function create($residenceId, Request $request)
     {
         $flats = $this->flatRepository->indexForNewContract($residenceId);
         $tenants = $this->tenantRepository->indexForNewContract($residenceId);
+        $last_tenant = $this->tenantRepository->getLastForNewContract($residenceId);
+
+        $arrTenants[\Lang::get('global.contract.last')] = $last_tenant;
+        $arrTenants[\Lang::get('global.contract.all')] = $tenants;
 
         $documentsGeneral = $this->documentRepositoryInterface->index('general');
         $documentsStudent = $this->documentRepositoryInterface->index('student');
@@ -88,7 +92,7 @@ class ContractController extends Controller
         $documentsGuarantor = $this->documentRepositoryInterface->index('guarantor');
         $documentsLocapass = $this->documentRepositoryInterface->index('locapass');
 
-        return view('contract.create', ['flats' => $flats, 'tenants' => $tenants, 'documents_general' => $documentsGeneral, 'documents_student' => $documentsStudent, 'documents_trainee' => $documentsTrainee, 'documents_employe' => $documentsEmploye, 'documents_guarantor' => $documentsGuarantor, 'documents_locapass' => $documentsLocapass]);
+        return view('contract.create', ['flats' => $flats, 'tenants' => $arrTenants, 'documents_general' => $documentsGeneral, 'documents_student' => $documentsStudent, 'documents_trainee' => $documentsTrainee, 'documents_employe' => $documentsEmploye, 'documents_guarantor' => $documentsGuarantor, 'documents_locapass' => $documentsLocapass]);
     }
 
     /**

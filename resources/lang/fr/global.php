@@ -27,7 +27,7 @@ return [
         'not_specified'         => 'Non renseigné',
         'birthday'              => 'Anniversaires de la semaine',
         'hello'                 => 'Bonjour',
-        'logout'                => 'Déconnexion',
+        'logout'                => 'Déconnexion'
     ],
 
     'residence' => [
@@ -128,6 +128,8 @@ return [
         'tpe'                   => 'TPE',
         'transfer'              => 'Virement',
         'other'                 => 'Autre',
+        'last'                  => 'Dernier locataire',
+        'all'                   => 'Tous les locataires',
 
         'action_prefix'         => 'Le contrat'
     ]
