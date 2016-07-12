@@ -106,7 +106,7 @@ class ContractRepository implements ContractRepositoryInterface {
     // retourne les contrats pré-réservés
     public function indexBooked($residenceId) {
 
-        return $this->scopeOnResidenceOnly($residenceId)->select('contract.id', 'contract.start_date', 'contract.end_date', 'contract.price', 'contract.application_fee', 'contract.deposit', 'contract.mode_of_payment', 'contract.status', 'contract.flat_id', 'contract.tenant_id')->where('status', '=', \Lang::get('global.contract.option'))->get();
+        return $this->scopeOnResidenceOnly($residenceId)->select('contract.id', 'contract.start_date', 'contract.end_date', 'contract.price', 'contract.application_fee', 'contract.deposit', 'contract.mode_of_payment', 'contract.status', 'contract.flat_id', 'contract.tenant_id')->where('contract.status', '=', \Lang::get('global.contract.option'))->get();
     }
 
     // retourne les contrats d'un logement par date de début décroissante
