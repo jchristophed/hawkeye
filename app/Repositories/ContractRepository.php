@@ -44,7 +44,7 @@ class ContractRepository implements ContractRepositoryInterface {
     // retourne tous les contrats d'une résidence
     public function index($residenceId) {
 
-        return $this->scopeOnResidenceOnly($residenceId)->select('contract.id', 'contract.start_date', 'contract.end_date', 'contract.price', 'contract.application_fee', 'contract.deposit', 'contract.mode_of_payment', 'contract.option', 'contract.flat_id', 'contract.tenant_id')->get();
+        return $this->scopeOnResidenceOnly($residenceId)->select('contract.id', 'contract.start_date', 'contract.end_date', 'contract.price', 'contract.application_fee', 'contract.deposit', 'contract.mode_of_payment', 'contract.status', 'contract.flat_id', 'contract.tenant_id')->get();
     }
 
     // retourne tous les contrats en cours d'une résidence
@@ -100,13 +100,13 @@ class ContractRepository implements ContractRepositoryInterface {
     // retourne les contrats incomplets
     public function indexIncomplete($residenceId) {
 
-        return $this->scopeOnResidenceOnly($residenceId)->select('contract.id', 'contract.start_date', 'contract.end_date', 'contract.price', 'contract.application_fee', 'contract.deposit', 'contract.mode_of_payment', 'contract.option', 'contract.flat_id', 'contract.tenant_id')->has('documents')->get();
+        return $this->scopeOnResidenceOnly($residenceId)->select('contract.id', 'contract.start_date', 'contract.end_date', 'contract.price', 'contract.application_fee', 'contract.deposit', 'contract.mode_of_payment', 'contract.status', 'contract.flat_id', 'contract.tenant_id')->has('documents')->get();
     }
 
     // retourne les contrats pré-réservés
     public function indexBooked($residenceId) {
 
-        return $this->scopeOnResidenceOnly($residenceId)->select('contract.id', 'contract.start_date', 'contract.end_date', 'contract.price', 'contract.application_fee', 'contract.deposit', 'contract.mode_of_payment', 'contract.option', 'contract.flat_id', 'contract.tenant_id')->where('option', '=', 1)->get();
+        return $this->scopeOnResidenceOnly($residenceId)->select('contract.id', 'contract.start_date', 'contract.end_date', 'contract.price', 'contract.application_fee', 'contract.deposit', 'contract.mode_of_payment', 'contract.status', 'contract.flat_id', 'contract.tenant_id')->where('status', '=', \Lang::get('global.contract.option'))->get();
     }
 
     // retourne les contrats d'un logement par date de début décroissante
@@ -155,7 +155,7 @@ class ContractRepository implements ContractRepositoryInterface {
     public function getActiveByFlat($residenceId, Flat $flat) {
 
         return $this    ->scopeRunningOnResidenceOnly($residenceId)
-                        ->select('contract.id', 'contract.start_date', 'contract.end_date', 'contract.price', 'contract.application_fee', 'contract.deposit', 'contract.mode_of_payment', 'contract.option', 'contract.flat_id', 'contract.tenant_id')
+                        ->select('contract.id', 'contract.start_date', 'contract.end_date', 'contract.price', 'contract.application_fee', 'contract.deposit', 'contract.mode_of_payment', 'contract.status', 'contract.flat_id', 'contract.tenant_id')
                         ->where('flat_id', '=',  $flat->id)->first();
     }
 
@@ -169,7 +169,7 @@ class ContractRepository implements ContractRepositoryInterface {
     public function getNextByFlat($residenceId, Flat $flat) {
 
         return $this    ->scopeOnResidenceOnly($residenceId)
-                        ->select('contract.id', 'contract.start_date', 'contract.end_date', 'contract.price', 'contract.application_fee', 'contract.deposit', 'contract.mode_of_payment', 'contract.option', 'contract.flat_id', 'contract.tenant_id')
+                        ->select('contract.id', 'contract.start_date', 'contract.end_date', 'contract.price', 'contract.application_fee', 'contract.deposit', 'contract.mode_of_payment', 'contract.status', 'contract.flat_id', 'contract.tenant_id')
                         ->where('start_date', '>', date('Y-m-d'))
                         ->where('flat_id', '=',  $flat->id)
                         ->orderBy('start_date', 'asc')
@@ -188,7 +188,7 @@ class ContractRepository implements ContractRepositoryInterface {
         $contract->application_fee = $inputs['application_fee'];
         $contract->deposit = $inputs['deposit'];
         $contract->mode_of_payment = $inputs['mode_of_payment'];
-        $contract->option = $inputs['option'];
+        $contract->status = $inputs['status'];
         $contract->flat_id = $inputs['flat'];
         $contract->tenant_id = $inputs['tenant'];
 

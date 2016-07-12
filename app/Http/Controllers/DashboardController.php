@@ -23,6 +23,10 @@ class DashboardController extends Controller
 
     public function __construct(ResidenceRepositoryInterface $residenceRepositoryInterface, FlatRepositoryInterface $flatRepositoryInterface, ContractRepositoryInterface $contractRepositoryInterface, TenantRepositoryInterface $tenantRepositoryInterface)
     {
+        if (\Config::get('app.env') == 'production') {
+            $this->middleware('auth');
+        }
+
         $this->residenceRepository = $residenceRepositoryInterface;
         $this->flatRepository = $flatRepositoryInterface;
         $this->contractRepository = $contractRepositoryInterface;

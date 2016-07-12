@@ -28,7 +28,7 @@ class Contract extends Model
 
     public function getFullPriceAttribute() {
 
-        return !empty($this->price) ? $this->price . ' ' . Lang::get('global.lbl.euro') : '';
+        return !empty($this->price) ? number_format($this->price, 0, '.', ' ') . ' ' . Lang::get('global.lbl.euro') : '';
     }
 
     public function getFullApplicationFeeAttribute() {

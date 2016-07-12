@@ -29,7 +29,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">{{ trans_choice('global.contract.title', 2) }}</div>
 
-                    {% include 'contract.listing.twig' with {'contracts' : contracts} %}
+                    {% include 'contract.listing.twig' with {'contracts' : contracts, 'active_contract' : contract.id} %}
 
                 </div>
             </div>

@@ -13,3 +13,21 @@
 .title-event {
     color : #E52BAE;
 }
+
+.table > thead > tr.remove > td,
+.table > tbody > tr.remove > td,
+.table > tfoot > tr.remove > td,
+.table > thead > tr.remove > th,
+.table > tbody > tr.remove > th,
+.table > tfoot > tr.remove > th {
+    color: #fff;
+    background-color: #000;
+}
+.table-hover > tbody > tr > td.remove:hover,
+.table-hover > tbody > tr > th.remove:hover,
+.table-hover > tbody > tr.remove:hover > td,
+.table-hover > tbody > tr:hover > .remove,
+.table-hover > tbody > tr.remove:hover > th {
+    color: #fff;
+    background-color: #000;
+}

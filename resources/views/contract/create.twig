@@ -85,11 +85,11 @@
         {{ form_select('mode_of_payment', values, null, {'class': 'form-control'}) }}
     </div>
 
-    {# Pré-réservation #}
+    {# Statut #}
     <div class="form-group">
-        {{ form_label('option', trans('global.contract.option')) }}
-        {% set values = {0 : trans('global.lbl.no'), 1 : trans('global.lbl.yes')} %}
-        {{ form_select('option', values, null, {'class': 'form-control'}) }}
+        {{ form_label('status', trans('global.contract.status')) }}
+        {% set values = {(trans('global.contract.classic')) : trans('global.contract.classic'), (trans('global.contract.option')) : trans('global.contract.option'), (trans('global.contract.cancel')) : trans('global.contract.cancel')} %}
+        {{ form_select('status', values, null, {'class': 'form-control'}) }}
     </div>
 
     <div class="row">
