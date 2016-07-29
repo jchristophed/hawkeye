@@ -72,6 +72,10 @@ class AuthController extends Controller
 
             \Auth::login($userCheck, true);
             return redirect()->route('home');
+
+        } else {
+
+            return redirect()->route('auth.login');
         }
     }
 

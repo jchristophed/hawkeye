@@ -30,11 +30,12 @@ class ContractRepository implements ContractRepositoryInterface {
     private function scopeRunningOnResidenceOnly($residenceId) {
 
         return $this    ->scopeOnResidenceOnly($residenceId)
-                        ->where('start_date', '<=', date('Y-m-d'))
+                        ->where('contract.status', '!=', 'Annulé')
+                        ->where('contract.start_date', '<=', date('Y-m-d'))
                         ->where(function ($query2) {
                                   $query2
-                                      ->where('end_date', '>=', date('Y-m-d'))
-                                      ->orWhere('end_date', '=', '0000-00-00');
+                                      ->where('contract.end_date', '>=', date('Y-m-d'))
+                                      ->orWhere('contract.end_date', '=', '0000-00-00');
                         });
     }
 
@@ -100,13 +101,13 @@ class ContractRepository implements ContractRepositoryInterface {
     // retourne les contrats incomplets
     public function indexIncomplete($residenceId) {
 
-        return $this->scopeOnResidenceOnly($residenceId)->select('contract.id', 'contract.start_date', 'contract.end_date', 'contract.price', 'contract.application_fee', 'contract.deposit', 'contract.mode_of_payment', 'contract.status', 'contract.flat_id', 'contract.tenant_id')->has('documents')->get();
+        return $this->scopeOnResidenceOnly($residenceId)->select('contract.id', 'contract.start_date', 'contract.end_date', 'contract.price', 'contract.application_fee', 'contract.deposit', 'contract.mode_of_payment', 'contract.status', 'contract.flat_id', 'contract.tenant_id')->has('documents')->orderBy('tenant.lastname', 'asc')->get();
     }
 
     // retourne les contrats pré-réservés
     public function indexBooked($residenceId) {
 
-        return $this->scopeOnResidenceOnly($residenceId)->select('contract.id', 'contract.start_date', 'contract.end_date', 'contract.price', 'contract.application_fee', 'contract.deposit', 'contract.mode_of_payment', 'contract.status', 'contract.flat_id', 'contract.tenant_id')->where('contract.status', '=', \Lang::get('global.contract.option'))->get();
+        return $this->scopeOnResidenceOnly($residenceId)->select('contract.id', 'contract.start_date', 'contract.end_date', 'contract.price', 'contract.application_fee', 'contract.deposit', 'contract.mode_of_payment', 'contract.status', 'contract.flat_id', 'contract.tenant_id')->where('contract.status', '=', \Lang::get('global.contract.option'))->orderBy('tenant.lastname', 'asc')->get();
     }
 
     // retourne les contrats d'un logement par date de début décroissante
