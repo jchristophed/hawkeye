@@ -40,7 +40,7 @@
 
     <div class="row" style="margin-top: 150px">
         <img src="/img/logo114.png" alt="Connexion" style="width: 90px"/><br />
-        <a href="" class="btn btn-danger">{{ trans('global.lbl.login') }}</a>
+        <a href="{{ route('social.redirect', {'provider' : 'google'}) }}" class="btn btn-danger">{{ trans('global.lbl.login') }}</a>
     </div>
 </div>
 
