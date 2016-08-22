@@ -12,7 +12,7 @@
     <div class="row">
 
 
-        <div class="{% if contract.documents is not empty %}col-sm-6{% else %}col-sm-12{% endif %}">
+        <div class="{% if contract.documents is not empty or contract.folder == 0 %}col-sm-6{% else %}col-sm-12{% endif %}">
             <div class="panel panel-info">
                 <div class="panel-heading">
                     {{ trans_choice('global.contract.title', 1) }}
@@ -89,13 +89,11 @@
 
         </div>
 
-
-
         {% if contract.documents is not empty %}
 
             <div class="col-sm-6">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><span class="text-danger">Documents à fournir</span></div>
+                    <div class="panel-heading"><span class="text-danger">{{ trans('global.contract.documents_to_provide') }}</span></div>
 
                     <table class="table">
 
@@ -106,6 +104,25 @@
                             </tr>
 
                         {% endfor %}
+
+                    </table>
+
+                </div>
+            </div>
+
+        {% endif %}
+
+        {% if contract.folder == 0 %}
+
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{ trans('global.contract.documents_to_provide') }}</div>
+
+                    <table class="table">
+
+                        <tr class="danger">
+                            <td>{{ trans('global.contract.undelivered_folder') }}</td>
+                        </tr>
 
                     </table>
 

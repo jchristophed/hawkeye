@@ -110,6 +110,12 @@ class ContractRepository implements ContractRepositoryInterface {
         return $this->scopeOnResidenceOnly($residenceId)->select('contract.id', 'contract.start_date', 'contract.end_date', 'contract.price', 'contract.application_fee', 'contract.deposit', 'contract.mode_of_payment', 'contract.status', 'contract.flat_id', 'contract.tenant_id')->where('contract.status', '=', \Lang::get('global.contract.option'))->orderBy('tenant.lastname', 'asc')->get();
     }
 
+    // retourne les contrats dont le dossier n'a pas été remis
+    public function indexUndeliveredFolders($residenceId) {
+
+        return $this->scopeOnResidenceOnly($residenceId)->select('contract.id', 'contract.start_date', 'contract.end_date', 'contract.price', 'contract.application_fee', 'contract.deposit', 'contract.mode_of_payment', 'contract.status', 'contract.flat_id', 'contract.tenant_id')->where('contract.folder', '=', 0)->orderBy('tenant.lastname', 'asc')->get();
+    }
+
     // retourne les contrats d'un logement par date de début décroissante
     public function indexByFlatByStartDate(Flat $flat) {
 
@@ -190,6 +196,7 @@ class ContractRepository implements ContractRepositoryInterface {
         $contract->deposit = $inputs['deposit'];
         $contract->mode_of_payment = $inputs['mode_of_payment'];
         $contract->status = $inputs['status'];
+        $contract->folder = $inputs['folder'];
         $contract->flat_id = $inputs['flat'];
         $contract->tenant_id = $inputs['tenant'];
 

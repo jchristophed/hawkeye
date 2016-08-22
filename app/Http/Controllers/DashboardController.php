@@ -55,11 +55,23 @@ class DashboardController extends Controller
 
         // logements vides et reloués
         $freeFlatsRelet = $this->flatRepository->indexFreeRelet($residenceId);
+        $arrFreeFlatsRelet = [];
 
-        foreach ($freeFlatsRelet as $flat) {
+        foreach ($freeFlatsRelet as $key => $flat) {
+
             $flat->setContract($this->contractRepository->getActiveByFlat($residenceId, $flat));
             $flat->setNextContract($this->contractRepository->getNextByFlat($residenceId, $flat));
+
+            $arrFreeFlatsRelet[$key]['id'] = $flat->id;
+            $arrFreeFlatsRelet[$key]['name'] = $flat->name;
+            $arrFreeFlatsRelet[$key]['next_contract_full_price'] = $flat->nextContract->fullPrice;
+            $arrFreeFlatsRelet[$key]['next_contract_id'] = $flat->nextContract->id;
+            $arrFreeFlatsRelet[$key]['next_contract_start_date'] = $flat->nextContract->start_date;
         }
+
+        usort($arrFreeFlatsRelet, function($a, $b) {
+            return strtotime($a['next_contract_start_date']) - strtotime($b['next_contract_start_date']);
+        });
 
         // logements avec préavis et non reloués
         $warningFlatsNotRelet = $this->flatRepository->indexWarningNotRelet($residenceId);
@@ -72,6 +84,7 @@ class DashboardController extends Controller
         $nbCompleteContracts = $this->contractRepository->getNbCompleteContracts($residenceId);
         $incompleteContracts = $this->contractRepository->indexIncomplete($residenceId);
         $bookedContracts = $this->contractRepository->indexBooked($residenceId);
+        $undeliveredFolders = $this->contractRepository->indexUndeliveredFolders($residenceId);
 
         $nbNewTenants = $this->tenantRepository->getNbByContract($residenceId, Lang::choice('global.tenant.new', 1));
         $nbOldTenants = $this->tenantRepository->getNbByContract($residenceId, Lang::choice('global.tenant.old', 1));
@@ -80,10 +93,11 @@ class DashboardController extends Controller
         $tenantsTodayBirthday = $this->tenantRepository->indexTodayBirthday($residenceId);
 
         return view('dashboard.listing', [  'free_flats_not_relet' => $freeFlatsNotRelet,
-                                            'free_flats_relet' => $freeFlatsRelet,
+                                            'free_flats_relet' => $arrFreeFlatsRelet,
                                             'warning_flats_not_relet' => $warningFlatsNotRelet,
                                             'incomplete_contracts' => $incompleteContracts,
                                             'booked_contracts' => $bookedContracts,
+                                            'undelivered_folders' => $undeliveredFolders,
                                             'tenants_birthday' => $tenantsTodayBirthday,
                                             'residence' => $this->residence,
                                             'nb_occupied_flats' => $nbOccupiedFlats,

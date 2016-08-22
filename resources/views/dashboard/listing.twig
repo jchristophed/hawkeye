@@ -57,6 +57,48 @@
     <div class="row">
 
         <div class="col-sm-4">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ trans_choice('global.contract.book', 2) }}</div>
+
+                {# contrats pré-réservés #}
+                <table class="table table-condensed table-striped text-center">
+
+                    {% if booked_contracts is not empty %}
+
+                        <thead>
+                        <tr>
+                            <th class="text-center hidden-sm">#</th>
+                            <th class="text-center">{{ trans_choice('global.flat.title', 1) }}</th>
+                            <th class="text-center hidden-sm">{{ trans_choice('global.tenant.title', 1) }}</th>
+                            <th class="text-center"></th>
+                        </tr>
+                        </thead>
+
+                    {% endif %}
+
+                    {% for contract in booked_contracts if booked_contracts is not empty%}
+
+                        <tr>
+                            <td class="hidden-sm">{{ loop.index }}</td>
+                            <td><a href="{{ route('residence.flat.show', [residence.id, contract.flat.id]) }}" title="{{ contract.flat.name }}">{{ contract.flat.name }}</a></td>
+                            <td class="hidden-sm"><a href="{{ route('residence.tenant.show', [residence.id, contract.tenant.id]) }}" title="{{ contract.tenant.full_name }}">{{ contract.tenant.full_name }}</a></td>
+                            <td>
+                                <a href="{{ route('residence.contract.show', [residence.id, contract.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default pull-right">{{ trans('global.lbl.show') }}</a>
+                            </td>
+                        </tr>
+
+                    {% else %}
+
+                        <tr>
+                            <td colspan="8" class="text-success">{{ trans('global.contract.no_booked') }}</td>
+                        </tr>
+
+                    {% endfor %}
+
+                </table>
+            </div>
+            
             <div class="panel panel-danger">
                 <div class="panel-heading">{{ trans_choice('global.flat.title', 2) }} {{ trans_choice('global.flat.empty_not_relet', 2) | lower }}</div>
 
@@ -171,9 +213,9 @@
                         <tr>
                             <td class="hidden-sm">{{ loop.index }}</td>
                             <td>{{ flat.name }}</td>
-                            <td class="hidden-sm">{{ flat.full_price }}</td>
+                            <td class="hidden-sm">{{ flat.next_contract_full_price }}</td>
                             <td>
-                                <a href="{{ route('residence.contract.show', [residence.id, flat.next_contract.id]) }}" class="label label-success" style="text-decoration: none">{{ trans('global.flat.relet') }} {{ flat.next_contract.start_date | date('d/m/y') }}</a>
+                                <a href="{{ route('residence.contract.show', [residence.id, flat.next_contract_id]) }}" class="label label-success" style="text-decoration: none">{{ trans('global.flat.relet') }} {{ flat.next_contract_start_date | date('d/m/y') }}</a>
                             </td>
                             <td>
                                 <a href="{{ route('residence.flat.show', [residence.id, flat.id]) }}" title="{{ trans('global.lbl.show') }}" class="btn btn-xs btn-default pull-right">{{ trans('global.lbl.show') }}</a>
@@ -195,25 +237,25 @@
         <div class="col-sm-4">
 
             <div class="panel panel-default">
-                <div class="panel-heading">{{ trans_choice('global.contract.book', 2) }}</div>
+                <div class="panel-heading">{{ trans_choice('global.contract.no_folder', 2) }}</div>
 
-                {# contrats pré-réservés #}
+                {# contrats dont le dossier n'a pas été remis #}
                 <table class="table table-condensed table-striped text-center">
 
-                    {% if booked_contracts is not empty %}
+                    {% if undelivered_folders is not empty  %}
 
                         <thead>
-                            <tr>
-                                <th class="text-center hidden-sm">#</th>
-                                <th class="text-center">{{ trans_choice('global.flat.title', 1) }}</th>
-                                <th class="text-center hidden-sm">{{ trans_choice('global.tenant.title', 1) }}</th>
-                                <th class="text-center"></th>
-                            </tr>
+                        <tr>
+                            <th class="text-center hidden-sm">#</th>
+                            <th class="text-center">{{ trans_choice('global.flat.title', 1) }}</th>
+                            <th class="text-center hidden-sm">{{ trans_choice('global.tenant.title', 1) }}</th>
+                            <th class="text-center"></th>
+                        </tr>
                         </thead>
 
                     {% endif %}
 
-                    {% for contract in booked_contracts if booked_contracts is not empty%}
+                    {% for contract in undelivered_folders if undelivered_folders is not empty %}
 
                         <tr>
                             <td class="hidden-sm">{{ loop.index }}</td>
@@ -227,7 +269,7 @@
                     {% else %}
 
                         <tr>
-                            <td colspan="8" class="text-success">{{ trans('global.contract.no_booked') }}</td>
+                            <td colspan="8" class="text-success">{{ trans('global.contract.all_complete') }}</td>
                         </tr>
 
                     {% endfor %}

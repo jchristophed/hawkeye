@@ -17,6 +17,7 @@ interface ContractRepositoryInterface
 
     public function indexIncomplete($residenceId);
     public function indexBooked($residenceId);
+    public function indexUndeliveredFolders($residenceId);
     public function indexByFlatByStartDate(Flat $flat);
     public function indexByTenantByStartDate(Tenant $tenant);
 

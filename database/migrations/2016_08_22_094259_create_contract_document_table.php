@@ -19,8 +19,8 @@ class CreateContractDocumentTable extends Migration
         });
 
         Schema::table('contract_document', function (Blueprint $table) {
-            $table->foreign('contract_id')->references('id')->on('contract');
-            $table->foreign('document_id')->references('id')->on('document');
+            $table->foreign('contract_id')->references('id')->on('contract')->onDelete('cascade');;
+            $table->foreign('document_id')->references('id')->on('document')->onDelete('cascade');;
         });
     }
 

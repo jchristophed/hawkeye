@@ -92,6 +92,13 @@
         {{ form_select('status', values, null, {'class': 'form-control'}) }}
     </div>
 
+    {# Dossier remis #}
+    <div class="form-group">
+        {{ form_label('folder', trans('global.contract.folder')) }}
+        {% set values = {0 : trans('global.lbl.no'), 1 : trans('global.lbl.yes')} %}
+        {{ form_select('folder', values, null, {'class': 'form-control'}) }}
+    </div>
+
     <div class="row">
 
         <div class="col-sm-4">

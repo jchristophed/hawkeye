@@ -18,6 +18,7 @@ class CreateTenantTable extends Migration
             $table->string('lastname');
             $table->date('birth_date');
             $table->string('status');
+            $table->string('contract');
             $table->string('company');
             $table->integer('residence_id')->unsigned();
             $table->foreign('residence_id')->references('id')->on('residence');

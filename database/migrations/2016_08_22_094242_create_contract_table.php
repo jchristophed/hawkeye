@@ -20,6 +20,8 @@ class CreateContractTable extends Migration
             $table->float('application_fee');
             $table->float('deposit');
             $table->string('mode_of_payment');
+            $table->string('status');
+            $table->boolean('folder');
             $table->integer('flat_id')->unsigned();
             $table->integer('tenant_id')->unsigned();
             $table->timestamps();

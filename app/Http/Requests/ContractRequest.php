@@ -29,7 +29,9 @@ class ContractRequest extends Request
             'start_date' => 'required|date',
             'price' => 'numeric',
             'application_fee' => 'numeric',
-            'deposit' => 'numeric'
+            'deposit' => 'numeric',
+            'status' => 'boolean',
+            'folder' => 'boolean'
         ];
     }
 }
