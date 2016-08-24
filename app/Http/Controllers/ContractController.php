@@ -104,7 +104,6 @@ class ContractController extends Controller
     public function store(ContractRequest $request, $residenceId)
     {
         $contract = $this->contractRepository->store($request->all());
-
         return redirect()->route('residence.contract.index', $residenceId)->withOk(Lang::get('global.contract.action_prefix') . ' ' . Lang::get('global.lbl.add_suffix'));
     }
 
